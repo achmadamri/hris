@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pph_sub_ptt" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2e892ed8-c983-4875-aac8-990a1eb4e136">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="tbeId" class="java.lang.String"/>
+	<parameter name="tbpphId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *
+  FROM    view_pph_tambahan
+       JOIN
+          tb_pph
+       ON DATE_FORMAT(view_pph_tambahan.tbpph_date, '%Y-%m') =
+             DATE_FORMAT(tb_pph.tbpph_date, '%Y-%m')
+ WHERE view_pph_tambahan.tbe_id = $P{tbeId} AND tb_pph.tbpph_id = $P{tbpphId} and tbppht_nominal > 0 and view_pph_tambahan.tbppht_name not in (select tbr_name from tb_renumeration)]]>
+	</queryString>
+	<field name="tbe_id" class="java.lang.Integer"/>
+	<field name="tbe_name" class="java.lang.String"/>
+	<field name="tbpph_id" class="java.lang.Integer"/>
+	<field name="tbpph_date" class="java.sql.Timestamp"/>
+	<field name="tbppht_id" class="java.lang.Integer"/>
+	<field name="tbppht_name" class="java.lang.String"/>
+	<field name="tbppht_nominal" class="java.lang.Double"/>
+	<field name="tbpph_ptkp" class="java.lang.Double"/>
+	<field name="tbpph_salary" class="java.lang.Double"/>
+	<field name="tbpph_jkkjkm" class="java.lang.Double"/>
+	<field name="tbpph_npwp_awal_tahun" class="java.lang.Integer"/>
+	<field name="tbpph_gaji_pokok_gross" class="java.lang.Double"/>
+	<field name="tbpph_tunjangan_tetap" class="java.lang.Double"/>
+	<field name="tbpph_tunjangan_jamsostek_jkkjkm" class="java.lang.Double"/>
+	<field name="tbpph_total_gross" class="java.lang.Double"/>
+	<field name="tbpph_iuran_jht_jamsostek" class="java.lang.Double"/>
+	<field name="tbpph_biaya_jabatan" class="java.lang.Double"/>
+	<field name="tbpph_pend_sbln_sblm_pajak" class="java.lang.Double"/>
+	<field name="tbpph_pend_ytd_sblm_pajak_smp_bln_lalu" class="java.lang.Double"/>
+	<field name="tbpph_pajak_disetor_ytd_smp_bln_lalu" class="java.lang.Double"/>
+	<field name="tbpph_faktor_pengali_utk_disetahunkan" class="java.lang.Double"/>
+	<field name="tbpph_pendapatan_disetahunkan" class="java.lang.Double"/>
+	<field name="tbpph_pendapatan_kena_pajak" class="java.lang.Double"/>
+	<field name="tbpph_pajak_setahun_utk_kary_ber_npwp" class="java.lang.Double"/>
+	<field name="tbpph_pajak_setahun_utk_kary_tdk_ber_npwp" class="java.lang.Double"/>
+	<field name="tbpph_pajak_terutang_smp_bln_ini" class="java.lang.Double"/>
+	<field name="tbpph_pajak_bln_ini" class="java.lang.Double"/>
+	<field name="tbpph_take_home_pay" class="java.lang.Double"/>
+	<field name="tbpph_pendapatan_tidak_tetap" class="java.lang.Double"/>
+	<field name="tbpph_pendapatan_tidak_tetap_ytd" class="java.lang.Double"/>
+	<field name="tbpph_pajak_sdh_disetor_utk_pend_tdk_ttp_ytd" class="java.lang.Double"/>
+	<field name="tbpph_pend_disetahunkan_plus_komisi" class="java.lang.Double"/>
+	<field name="tbpph_pajak_tot_sethn_utk_kary_ber_npwp" class="java.lang.Double"/>
+	<field name="tbpph_pajak_tot_sethn_utk_kary_tdk_ber_npwp" class="java.lang.Double"/>
+	<field name="tbpph_pajak_komisi" class="java.lang.Double"/>
+	<field name="tbpph_take_home_pay_utk_pend_irreguler" class="java.lang.Double"/>
+	<field name="tbpph_loan" class="java.lang.Double"/>
+	<field name="tbpph_total_take_home_pay" class="java.lang.Double"/>
+	<field name="tbc_id" class="java.lang.Integer"/>
+	<field name="tbpph_total_take_home_pay_kurs" class="java.lang.Double"/>
+	<field name="tbpph_periode" class="java.lang.String"/>
+	<field name="tbpph_dummy" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="2ca4e65b-c8f9-4ebb-9886-8b9da69f2f23" x="101" y="0" width="200" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tbppht_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="15d840b9-38a3-416b-9656-095c81c01171" x="319" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbppht_nominal})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

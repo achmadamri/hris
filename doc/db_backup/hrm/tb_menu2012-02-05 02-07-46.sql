@@ -1,0 +1,101 @@
+﻿USE hrm;
+
+CREATE TABLE `tb_menu` (
+  `tbm_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tbm_parent_id` int(11) DEFAULT NULL,
+  `tbm_nama` varchar(45) DEFAULT NULL,
+  `tbm_index` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`tbm_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1;
+
+
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (1,null,'Admin','1');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (2,1,'Company Info','111');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (3,2,'General','1111');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (4,2,'Locations','1112');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (5,2,'Company Structure','1113');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (6,2,'Company Property','1114');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (7,1,'Job','112');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (8,7,'Job Titles','1121');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (9,7,'Job Specifications','1122');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (10,7,'Salary Grades','1123');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (11,7,'Employment Status','1125');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (12,7,'EEO Job Categories','1126');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (13,1,'Qualification','113');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (14,13,'Education','1131');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (15,13,'Licenses','1132');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (16,1,'Skills','114');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (17,16,'Skills','1141');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (18,16,'Languages','1142');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (19,1,'Memberships','115');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (20,19,'Membership Types','1151');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (21,19,'Memberships','1152');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (22,1,'Nationality & Race','116');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (23,22,'Nationality','1161');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (24,22,'Ethnic Races','1162');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (25,1,'Users','117');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (26,25,'HR Admin Users','1171');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (27,25,'ESS Users','1172');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (28,25,'Admin User Groups','1173');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (29,1,'Email Notifications','119');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (30,29,'Configuration','422');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (31,29,'Subscribe','1192');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (32,1,'Project Info','118');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (33,32,'Customers','1181');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (34,32,'Projects','1182');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (35,32,'Project Activities','1183');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (36,1,'Data Import/Export','120');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (37,36,'Define Custome Export','1201');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (38,36,'Export','1202');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (39,36,'Define Custome Import','1203');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (40,36,'Import','1204');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (41,1,'Custom Fields','121');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (42,null,'PIM','2');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (43,42,'Employee List','21');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (44,42,'Add Employee','22');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (45,null,'Leave','3');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (46,45,'Leave Summary','31');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (47,46,'Employee Leave Summary','311');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (48,45,'Define Days Off','32');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (49,48,'Days Off','321');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (50,48,'Specific Holidays','322');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (51,45,'Define Leave Types','33');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (52,45,'Assign Leave','34');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (53,45,'Leave List','35');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (54,null,'Time','4');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (55,54,'Beginning Of The Week','9999');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (56,54,'Timesheets','41');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (57,56,'Print Timesheets','411');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (58,56,'Employee Timesheets','412');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (59,54,'Attendance','42');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (60,59,'Employee Reports','421');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (61,59,'Configuration','1191');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (62,54,'Employee Reports','43');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (63,54,'Project Reports','44');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (64,54,'Work Shifts','45');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (65,null,'Benefits','5');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (66,65,'Health Saving Plan','51');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (67,66,'Define HSP','511');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (68,66,'Employee HSP Summary','512');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (69,66,'HSP Payments Due','513');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (70,66,'HSP Expenditures','514');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (71,66,'HSP Used','515');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (72,65,'Payroll Schedule','52');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (73,72,'View Payroll Schedule','521');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (74,72,'Add Pay Period','522');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (75,null,'Recruitment','6');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (76,75,'Job Vacancies','61');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (77,75,'Applicants','62');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (78,null,'Performance','7');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (79,78,'KPI List','71');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (80,78,'Add KPI','72');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (81,78,'Copy KPI','73');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (82,78,'Add Review','74');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (83,78,'Search Review','75');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (84,null,'Reports','9');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (85,84,'View Reports','91');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (86,84,'Define Reports','92');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (87,null,'Test','9999');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (88,87,'Test Window','9999');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (89,null,'ESS','8');
+insert into `hrm`.`tb_menu`(`tbm_id`,`tbm_parent_id`,`tbm_nama`,`tbm_index`) values (90,89,'ESS','81');

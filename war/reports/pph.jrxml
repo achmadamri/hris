@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pph" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3e382371-9f31-413d-aece-be719cd01e99">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="63"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="170c0ba0-8f10-444b-ac50-bf13bce1c893"/>
+	<parameter name="tbeId" class="java.lang.String">
+		<defaultValueExpression><![CDATA["6"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tbpphId" class="java.lang.String">
+		<defaultValueExpression><![CDATA["16"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Workspace_Eclipse\\GXT-HRIS-RESINDO\\war\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *
+  FROM view_pph
+ WHERE tbe_id = $P{tbeId} and tbpph_id = $P{tbpphId}]]>
+	</queryString>
+	<field name="tbe_id" class="java.lang.Integer"/>
+	<field name="tbe_name" class="java.lang.String"/>
+	<field name="tbpph_id" class="java.lang.Integer"/>
+	<field name="tbpph_date" class="java.sql.Timestamp"/>
+	<field name="tbpph_gaji_pokok_gross" class="java.lang.Double"/>
+	<field name="tbpph_tunjangan_tetap" class="java.lang.Double"/>
+	<field name="tbpph_tunjangan_jamsostek_jkkjkm" class="java.lang.Double"/>
+	<field name="tbpph_total_gross" class="java.lang.Double"/>
+	<field name="tbpph_iuran_jht_jamsostek" class="java.lang.Double"/>
+	<field name="tbpph_pajak_bln_ini" class="java.lang.Double"/>
+	<field name="tbpph_pendapatan_tidak_tetap" class="java.lang.Double"/>
+	<field name="tbpph_loan" class="java.lang.Double"/>
+	<field name="tbpph_total_take_home_pay" class="java.lang.Double"/>
+	<field name="tbj_joined_date" class="java.sql.Timestamp"/>
+	<field name="tbjt_name" class="java.lang.String"/>
+	<field name="tbes_name" class="java.lang.String"/>
+	<field name="tbo_nama" class="java.lang.String"/>
+	<field name="tbptkp_status" class="java.lang.String"/>
+	<field name="tbpph_periode" class="java.lang.String"/>
+	<field name="tbe_employee_id" class="java.lang.String"/>
+	<field name="tbe_tax_no" class="java.lang.String"/>
+	<field name="tbpph_pajak_komisi" class="java.lang.Double"/>
+	<group name="tbe_name">
+		<groupExpression><![CDATA[$F{tbe_name}]]></groupExpression>
+		<groupHeader>
+			<band height="161">
+				<staticText>
+					<reportElement uuid="9bac7b0c-85d3-4a2d-92e6-a1ef09bef47f" x="0" y="0" width="555" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<text><![CDATA[SLIP PEMBAYARAN GAJI]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="f15156c9-df29-40d4-b841-d5172f07dcf5" x="0" y="20" width="555" height="20"/>
+					<textElement textAlignment="Center" markup="none">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Periode : " + $F{tbpph_periode}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="121" y="60" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + $F{tbe_employee_id}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="0" y="60" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[No. Karyawan]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="0" y="80" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[NPWP Karyawan]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="121" y="80" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + $F{tbe_tax_no}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="0" y="100" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Nama Karyawan]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="121" y="100" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + $F{tbe_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="0" y="120" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Departemen]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="121" y="120" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + $F{tbo_nama}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="417" y="100" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + $F{tbptkp_status}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="417" y="80" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + $F{tbjt_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="296" y="80" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Jabatan]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="417" y="60" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + (new SimpleDateFormat("dd.MM.yyyy").format($F{tbj_joined_date}))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="296" y="60" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Tgl masuk]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="296" y="100" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Status PTKP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="296" y="120" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Tgl. Cetak]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="940e1385-8a5e-4ee7-a721-eb68208789de" x="417" y="120" width="138" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[": " + (new SimpleDateFormat("dd.MM.yyyy").format(new Date()))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="0" y="140" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="0" y="40" width="121" height="20"/>
+					<textElement>
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="3f1449ad-3552-4fe0-917f-161a01987f8a" x="0" y="160" width="555" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<detail>
+		<band height="104">
+			<staticText>
+				<reportElement uuid="a01285f5-f876-4c68-9763-07d0f8389779" x="0" y="20" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Penghasilan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9415a05b-b5c8-4c4a-9c53-11b3fb990a99" x="100" y="40" width="200" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Gaji Pokok Gross
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f641c626-6f43-41f3-ad5d-8feb7f5fda58" x="318" y="40" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_gaji_pokok_gross})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0ddf8ecd-05cc-4330-832e-87dcdc457c18" x="100" y="61" width="200" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tunjangan Tetap
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="52aec31a-7ee1-4f79-acf5-e39c09541710" x="318" y="61" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_tunjangan_tetap})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dd752140-caf3-4f20-8084-82a5f9023e7d" x="100" y="84" width="200" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tunjangan Jamsostek JKK JKM
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d1b214e6-1e46-41e1-80cb-28eb34b5fdea" x="319" y="83" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_tunjangan_jamsostek_jkkjkm})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3e660017-1722-4e4d-a3b8-d48041ba6e38" x="0" y="0" width="121" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<subreport>
+				<reportElement uuid="5e3c711f-32db-405f-b1ff-9a81060cc222" x="0" y="0" width="555" height="20"/>
+				<subreportParameter name="tbeId">
+					<subreportParameterExpression><![CDATA[$P{tbeId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tbpphId">
+					<subreportParameterExpression><![CDATA[$F{tbpph_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/pph_sub_tambahan.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="101">
+			<staticText>
+				<reportElement uuid="45c86b5d-debd-4755-8b1d-e251d4383fe3" x="100" y="81" width="200" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{tbpph_pajak_komisi} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Pajak Komisi
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4eb22d96-8b20-4036-97a8-be21f19a1c05" x="319" y="81" width="100" height="20" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{tbpph_pajak_komisi} > 0]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_pajak_komisi})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a01285f5-f876-4c68-9763-07d0f8389779" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Potongan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9015df98-8d78-46f7-8913-5681f9bce0be" x="100" y="20" width="200" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Iuran JHT Jamsostek
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9a6ba714-eadb-443a-afa2-e7c77140e1f6" x="319" y="20" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_iuran_jht_jamsostek})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b33dfe56-1621-4696-be8c-54e63f24652b" x="100" y="60" width="200" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Pph21
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="28861502-6100-4b59-8f41-ed93b8d607f8" x="319" y="60" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_pajak_bln_ini})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="53ac4599-22d9-437c-85da-766ad0705bf2" x="100" y="40" width="200" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tunjangan Jamsostek JKK JKM
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0b372199-435b-485c-a920-1fe259a0baea" x="319" y="40" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_tunjangan_jamsostek_jkkjkm})]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="20">
+			<subreport runToBottom="false">
+				<reportElement uuid="9d2974a7-7020-4314-a8ba-96f860282f5a" x="0" y="0" width="555" height="20" isRemoveLineWhenBlank="true"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="tbpphId">
+					<subreportParameterExpression><![CDATA[$P{tbpphId}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "/pph_sub_pinjaman.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="a01285f5-f876-4c68-9763-07d0f8389779" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Take Home Pay]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="32ee0071-84f4-43ec-950e-83b39e3626e7" x="319" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[NumberFormat.getNumberInstance().format($F{tbpph_total_take_home_pay})]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement uuid="8d155f6b-1822-4780-967c-1137631f62ea" mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Hal "+$V{PAGE_NUMBER}+" dari"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="f1beef0a-91fd-4a68-80cc-2e735155b35c" mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
