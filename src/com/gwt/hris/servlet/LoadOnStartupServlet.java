@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gwt.hris.cron.CronMain;
+import com.gwt.hris.db.Manager;
+import com.gwt.hris.db.exception.DAOException;
 
 public class LoadOnStartupServlet extends HttpServlet {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -14,7 +16,11 @@ public class LoadOnStartupServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		//TbEmergencyContactManager.getInstance().registerListener(new TbEmergencyContactListenerImpl());
+		try {
+			Manager.getInstance().defaultConfigure();
+		} catch (DAOException e) {
+			e.printStackTrace();
+		}
 		
 		CronMain cronMain = new CronMain();
 		cronMain.run();

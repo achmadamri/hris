@@ -61,14 +61,14 @@ public final class Manager
      */
     private Manager()
     {
-    	BasicDataSource basicDataSource = new BasicDataSource();
-		basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		basicDataSource.setUrl("jdbc:mysql://localhost:3306/hris?autoReconnect=true");
-		basicDataSource.setUsername("root");
-		basicDataSource.setPassword("P@55w0rd");
-		basicDataSource.setMaxActive(100);
-		basicDataSource.setValidationQuery("select 1");
-		this.setDataSource(basicDataSource);
+//    	BasicDataSource basicDataSource = new BasicDataSource();
+//		basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+//		basicDataSource.setUrl("jdbc:mysql://localhost:3306/hris?autoReconnect=true");
+//		basicDataSource.setUsername("root");
+//		basicDataSource.setPassword("P@55w0rd");
+//		basicDataSource.setMaxActive(100);
+//		basicDataSource.setValidationQuery("select 1");
+//		this.setDataSource(basicDataSource);
     }
 
     /**

@@ -216,7 +216,7 @@ public class MainTabLayout extends LayoutContainer {
 			
 			west.add(panel);
 			
-			south.add(new LabelField("Copyright @ 2018 PT. Dafba Informatika Indonesia"));
+//			south.add(new LabelField("Copyright @ 2018 PT. Dafba Informatika Indonesia"));
 			
 			employeeListInterfaceAsync.getEmployee(0, getCallback);
 

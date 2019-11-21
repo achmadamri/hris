@@ -56,6 +56,7 @@ public class WindowLogin extends WindowMain {
 
 					btnSubmit.setVisible(false);
 //					btnLoginHRAdmin.setVisible(true);
+					btnLogin.setVisible(true);
 					btnReset.setVisible(true);
 				}
 			} else {
@@ -97,6 +98,7 @@ public class WindowLogin extends WindowMain {
 
 					btnSubmit.setVisible(false);
 //					btnLoginHRAdmin.setVisible(true);
+					btnLogin.setVisible(true);
 					btnReset.setVisible(true);
 //				}
 //			} else {
@@ -146,6 +148,7 @@ public class WindowLogin extends WindowMain {
 					txtUsername.setEnabled(true);
 					txtPassword.setEnabled(true);
 //					btnLoginHRAdmin.setEnabled(true);
+					btnLogin.setEnabled(true);
 					btnReset.setEnabled(true);
 				} else {
 					window.show();
@@ -164,7 +167,7 @@ public class WindowLogin extends WindowMain {
 	public WindowLogin() {
 		window = new Window();
 		window.setId("WindowLogin");
-		window.setSize(550, 150);
+		window.setSize(300, 150);
 		window.setHeading("Login");
 	}
 
@@ -207,6 +210,7 @@ public class WindowLogin extends WindowMain {
 			public void componentKeyUp(ComponentEvent event) {
 				if (event.getKeyCode() == 13) {
 //					btnLoginHRAdmin.setEnabled(false);
+					btnLogin.setEnabled(false);
 					btnReset.setEnabled(false);
 					mainInterfaceAsync.doLogin(txtUsername.getValue(), txtPassword.getValue(), getLoginCallback);
 				}
@@ -224,6 +228,7 @@ public class WindowLogin extends WindowMain {
 					txtUsername.setEnabled(false);
 					txtPassword.setEnabled(false);
 //					btnLoginHRAdmin.setEnabled(false);
+					btnLogin.setEnabled(false);
 					btnReset.setEnabled(false);
 					mainInterfaceAsync.doLogin(txtUsername.getValue(), txtPassword.getValue(), getLoginCallback);
 				}
@@ -240,6 +245,7 @@ public class WindowLogin extends WindowMain {
 //	Button btnLoginDirector;
 //	Button btnLoginManager;
 //	Button btnLoginStaff;
+	Button btnLogin;
 
 	Button btnReset;
 
@@ -316,6 +322,18 @@ public class WindowLogin extends WindowMain {
 //			}
 //		});
 //		window.addButton(btnLoginStaff);
+
+		btnLogin = new Button("Login", new SelectionListener<ButtonEvent>() {
+			@Override
+			public void componentSelected(ButtonEvent ce) {
+				txtUsername.setEnabled(false);
+				txtPassword.setEnabled(false);
+				btnLogin.setEnabled(false);
+				btnReset.setEnabled(false);
+				mainInterfaceAsync.doLogin(txtUsername.getValue(), txtPassword.getValue(), getLoginCallback);
+			}
+		});
+		window.addButton(btnLogin);
 
 		btnReset = new Button("Reset", new SelectionListener<ButtonEvent>() {
 			@Override

@@ -47,5 +47,6 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-javaflow-r306555.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
