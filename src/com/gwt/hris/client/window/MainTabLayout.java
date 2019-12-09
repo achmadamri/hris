@@ -87,7 +87,7 @@ public class MainTabLayout extends LayoutContainer {
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 		this.setStyleAttribute("padding", "10px");
-		this.setStyleAttribute("padding-bottom", "60px");
+		this.setStyleAttribute("padding-bottom", "30px");
 
 		center.setBodyBorder(false);
 		center.setHeaderVisible(false);
@@ -102,14 +102,14 @@ public class MainTabLayout extends LayoutContainer {
 		BorderLayoutData centerData = new BorderLayoutData(LayoutRegion.CENTER);
 		centerData.setMargins(new Margins(0));
 		
-		BorderLayoutData southData = new BorderLayoutData(LayoutRegion.SOUTH, 25);
-		southData.setSplit(true);
-		southData.setCollapsible(false);
-		southData.setMargins(new Margins(0, 5, 0, 0));
+//		BorderLayoutData southData = new BorderLayoutData(LayoutRegion.SOUTH, 25);
+//		southData.setSplit(true);
+//		southData.setCollapsible(false);
+//		southData.setMargins(new Margins(0, 5, 0, 0));
 
 		this.add(west, westData);
 		this.add(center, centerData);
-		this.add(south, southData);
+//		this.add(south, southData);
 
 		tabPanel = new TabPanel();
 		tabPanel.setAnimScroll(true);  

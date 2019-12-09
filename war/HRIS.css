@@ -1,6 +1,6 @@
 /** Add css rules here for your application. */
 #logo {
-	background-color: #6C85A3 !important;
+	/** background-color: #6C85A3 !important; **/
 	height: 25px;
 }
 
