@@ -369,7 +369,7 @@ public class KPIAssignImpl extends MainRemoteServiceServlet implements KPIAssign
 		ViewKpiAssignBean datas[] = null;
 		int size = 0;
 		try {
-			if (SystemUtil.getInstance().access(this.getThreadLocalRequest().getSession(), 115, SystemUtil.ACCESS_VIEW) == false) {
+			if (SystemUtil.getInstance().access(this.getThreadLocalRequest().getSession(), 114, SystemUtil.ACCESS_VIEW) == false) {
 				throw new SystemException("No view access");
 			}
 
