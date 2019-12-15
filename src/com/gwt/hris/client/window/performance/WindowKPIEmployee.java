@@ -201,7 +201,6 @@ public class WindowKPIEmployee extends WindowMain {
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 		columns.add(checkBoxSelectionModel.getColumn());
 		columns.add(new ColumnConfig("tbkId", "<center><b>KPI ID</b></center>", 50));
-		columns.add(new ColumnConfig("tbkgName", "<center><b>KPI Group</b></center>", 100));
 		columns.add(new ColumnConfig("tbkDescription", "<center><b>Description</b></center>", 200));
 		columns.add(new ColumnConfig("tbkTargetNilai1", "<center><b>Score 1</b></center>", 100));
 		columns.add(new ColumnConfig("tbkTargetNilai2", "<center><b>Score 2</b></center>", 100));
@@ -282,7 +281,7 @@ public class WindowKPIEmployee extends WindowMain {
 		columns.add(ccActions);
 
 		ColumnModel cm = new ColumnModel(columns);
-		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("<center><b>Score</b></center>", 1, 5));
+		cm.addHeaderGroup(0, 3, new HeaderGroupConfig("<center><b>Target Score</b></center>", 1, 5));
 
 		GroupingView view = new GroupingView();
 		view.setShowGroupedColumn(false);

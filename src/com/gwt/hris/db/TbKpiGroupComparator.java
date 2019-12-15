@@ -34,12 +34,13 @@ public class TbKpiGroupComparator implements Comparator
      * <br>
      * Example:
      * <br>
-     * <code>Arrays.sort(pArray, new TbKpiGroupComparator(TbKpiGroupManager.ID_TBKG_NAME, bReverse));<code>
+     * <code>Arrays.sort(pArray, new TbKpiGroupComparator(TbKpiGroupManager.ID_TBKG_TOTAL_POIN, bReverse));<code>
      *
      * @param iType the field from which you want to sort
      * <br>
      * Possible values are:
      * <ul>
+     *   <li>TbKpiGroupManager.ID_TBKG_TOTAL_POIN
      *   <li>TbKpiGroupManager.ID_TBKG_NAME
      *   <li>TbKpiGroupManager.ID_TBKG_KPI_GROUP_ID
      *   <li>TbKpiGroupManager.ID_TBKG_ID
@@ -55,12 +56,13 @@ public class TbKpiGroupComparator implements Comparator
      * <br>
      * Example:
      * <br>
-     * <code>Arrays.sort(pArray, new TbKpiGroupComparator(TbKpiGroupManager.ID_TBKG_NAME, bReverse));<code>
+     * <code>Arrays.sort(pArray, new TbKpiGroupComparator(TbKpiGroupManager.ID_TBKG_TOTAL_POIN, bReverse));<code>
      *
      * @param iType the field from which you want to sort.
      * <br>
      * Possible values are:
      * <ul>
+     *   <li>TbKpiGroupManager.ID_TBKG_TOTAL_POIN
      *   <li>TbKpiGroupManager.ID_TBKG_NAME
      *   <li>TbKpiGroupManager.ID_TBKG_KPI_GROUP_ID
      *   <li>TbKpiGroupManager.ID_TBKG_ID
@@ -84,6 +86,17 @@ public class TbKpiGroupComparator implements Comparator
         int iReturn = 0;
         switch(iType)
         {
+            case TbKpiGroupManager.ID_TBKG_TOTAL_POIN:
+                if (b1.getTbkgTotalPoin() == null && b2.getTbkgTotalPoin() != null) {
+                    iReturn = -1;
+                } else if (b1.getTbkgTotalPoin() == null && b2.getTbkgTotalPoin() == null) {
+                    iReturn = 0;
+                } else if (b1.getTbkgTotalPoin() != null && b2.getTbkgTotalPoin() == null) {
+                    iReturn = 1;
+                } else {
+                    iReturn = b1.getTbkgTotalPoin().compareTo(b2.getTbkgTotalPoin());
+                }
+                break;
             case TbKpiGroupManager.ID_TBKG_NAME:
                 if (b1.getTbkgName() == null && b2.getTbkgName() != null) {
                     iReturn = -1;

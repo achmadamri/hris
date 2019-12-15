@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 public class TbKpiGroupBeanModel extends ReturnBean implements Serializable
 {
-	private static final long serialVersionUID = 5420047582593241915L;
+	private static final long serialVersionUID = -3189667061661129248L;
 	
 	private TbKpiGroupBeanModel beanModels[];
 	
@@ -26,6 +26,21 @@ public class TbKpiGroupBeanModel extends ReturnBean implements Serializable
 	public void setModels(TbKpiGroupBeanModel[] _beanModels) {
 		this.beanModels = _beanModels;
 	}
+
+    public Integer getTbkgTotalPoin()
+    {
+		return (Integer) get("tbkgTotalPoin");
+    }
+
+    public void setTbkgTotalPoin(Integer newVal)
+    {
+		set("tbkgTotalPoin", newVal);
+    }
+
+    public void setTbkgTotalPoin(int newVal)
+    {
+        setTbkgTotalPoin(new Integer(newVal));
+    }
 
     public String getTbkgName()
     {

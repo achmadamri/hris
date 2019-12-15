@@ -28,7 +28,7 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class ViewKpiBean
     implements Serializable, GeneratedBean
 {
-	private static final long serialVersionUID = 4994539755735979829L;
+	private static final long serialVersionUID = -7393112171304290096L;
 	
     private Integer tbeId;
 

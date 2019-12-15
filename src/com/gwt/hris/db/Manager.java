@@ -28,8 +28,6 @@ import java.util.PropertyResourceBundle;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
-
 import com.gwt.hris.db.exception.DAOException;
 
 /**
@@ -61,14 +59,14 @@ public final class Manager
      */
     private Manager()
     {
-//    	BasicDataSource basicDataSource = new BasicDataSource();
-//		basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-//		basicDataSource.setUrl("jdbc:mysql://localhost:3306/hris?autoReconnect=true");
-//		basicDataSource.setUsername("root");
-//		basicDataSource.setPassword("P@55w0rd");
-//		basicDataSource.setMaxActive(100);
-//		basicDataSource.setValidationQuery("select 1");
-//		this.setDataSource(basicDataSource);
+        try
+        {
+            this.defaultConfigure();
+        }
+        catch(DAOException de)
+        {
+            System.err.println(de.getMessage());
+        }
     }
 
     /**

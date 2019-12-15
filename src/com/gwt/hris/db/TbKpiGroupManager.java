@@ -46,26 +46,32 @@ public class TbKpiGroupManager
     public static final int SEARCH_ENDING_LIKE = 3;
 
     /**
+     * Identify the tbkg_total_poin field.
+     */
+    public static final int ID_TBKG_TOTAL_POIN = 0;
+
+    /**
      * Identify the tbkg_name field.
      */
-    public static final int ID_TBKG_NAME = 0;
+    public static final int ID_TBKG_NAME = 1;
 
     /**
      * Identify the tbkg_kpi_group_id field.
      */
-    public static final int ID_TBKG_KPI_GROUP_ID = 1;
+    public static final int ID_TBKG_KPI_GROUP_ID = 2;
 
     /**
      * Identify the tbkg_id field.
      */
-    public static final int ID_TBKG_ID = 2;
+    public static final int ID_TBKG_ID = 3;
 
     /**
      * Contains all the full fields of the tb_kpi_group table.
      */
     private static final String[] FULL_FIELD_NAMES =
     {
-        "tb_kpi_group.tbkg_name"
+        "tb_kpi_group.tbkg_total_poin"
+        ,"tb_kpi_group.tbkg_name"
         ,"tb_kpi_group.tbkg_kpi_group_id"
         ,"tb_kpi_group.tbkg_id"
     };
@@ -75,7 +81,8 @@ public class TbKpiGroupManager
      */
     public static final String[] FIELD_NAMES =
     {
-        "tbkg_name"
+        "tbkg_total_poin"
+        ,"tbkg_name"
         ,"tbkg_kpi_group_id"
         ,"tbkg_id"
     };
@@ -83,14 +90,16 @@ public class TbKpiGroupManager
     /**
      * Field that contains the comma separated fields of the tb_kpi_group table.
      */
-    public static final String ALL_FULL_FIELDS = "tb_kpi_group.tbkg_name"
+    public static final String ALL_FULL_FIELDS = "tb_kpi_group.tbkg_total_poin"
+                            + ",tb_kpi_group.tbkg_name"
                             + ",tb_kpi_group.tbkg_kpi_group_id"
                             + ",tb_kpi_group.tbkg_id";
 
     /**
      * Field that contains the comma separated fields of the tb_kpi_group table.
      */
-    public static final String ALL_FIELDS = "tbkg_name"
+    public static final String ALL_FIELDS = "tbkg_total_poin"
+                            + ",tbkg_name"
                             + ",tbkg_kpi_group_id"
                             + ",tbkg_id";
 
@@ -120,7 +129,7 @@ public class TbKpiGroupManager
     //////////////////////////////////////
     // PRIMARY KEY METHODS
     //////////////////////////////////////
-	
+
     /**
      * Loads a TbKpiGroupBean from the tb_kpi_group using its key fields.
      *
@@ -160,16 +169,6 @@ public class TbKpiGroupManager
             this.freeConnection(c);
         }
     }
-		
-	//1WS
-    //public TbKpiGroupBean loadByPrimaryKeyWs(Integer id) throws MalformedURLException, DAOException_Exception {
-    	//return fromBeanWsToBean(Util.getInstance().getDAOServiceV1().tbXLoadByPrimaryKey(id));
-    //}
-    
-    //2WS
-    //public int deleteByPrimaryKeyWs(Integer id) throws MalformedURLException, DAOException_Exception {
-    	//return Util.getInstance().getDAOServiceV1().tbXDeleteByPrimaryKey(id);
-    //}
 
     /**
      * Deletes rows according to its keys.
@@ -204,39 +203,6 @@ public class TbKpiGroupManager
             this.freeConnection(c);
         }
     }
-
-    //////////////////////////////////////
-    // GET/SET IMPORTED KEY BEAN METHOD
-    //////////////////////////////////////
-    /**
-     * Retrieves the TbKpiBean object from the tb_kpi_group.tbkg_id field.
-     *
-     * @param bean the TbKpiGroupBean
-     * @return the associated TbKpiBean bean
-     * @throws DAOException
-     */
-    //3.1 GET IMPORTED
-    public TbKpiBean[] getTbKpiBeans(TbKpiGroupBean bean) throws DAOException
-    {
-        TbKpiBean other = TbKpiManager.getInstance().createTbKpiBean();
-        other.setTbkgId(bean.getTbkgId());
-        return TbKpiManager.getInstance().loadUsingTemplate(other);
-    }
-
-    /**
-     * Associates the TbKpiGroupBean object to the TbKpiBean object.
-     *
-     * @param bean the TbKpiGroupBean object to use
-     * @param beanToSet the TbKpiBean object to associate to the TbKpiGroupBean
-     * @return the associated TbKpiBean bean
-     */
-    //4.1 SET IMPORTED
-    public TbKpiGroupBean setTbKpiBean(TbKpiGroupBean bean,TbKpiBean beanToSet)
-    {
-        bean.setTbkgId(beanToSet.getTbkgId());
-        return bean;
-    }
-
 
 
 
@@ -357,6 +323,18 @@ public class TbKpiGroupManager
 
 
     /**
+     * Deletes all rows from tb_kpi_group table.
+     * @return the number of deleted rows.
+     * @throws DAOException
+     */
+    //10
+    public int deleteAll() throws DAOException
+    {
+        return this.deleteByWhere("");
+    }
+
+
+    /**
      * Deletes rows from the tb_kpi_group table using a 'where' clause.
      * It is up to you to pass the 'WHERE' in your where clausis.
      * <br>Attention, if 'WHERE' is omitted it will delete all records.
@@ -439,6 +417,14 @@ public class TbKpiGroupManager
             this.beforeInsert(bean); // listener callback
             int _dirtyCount = 0;
             sql = new StringBuffer("INSERT into tb_kpi_group (");
+
+            if (bean.isTbkgTotalPoinModified()) {
+                if (_dirtyCount>0) {
+                    sql.append(",");
+                }
+                sql.append("tbkg_total_poin");
+                _dirtyCount++;
+            }
 
             if (bean.isTbkgNameModified()) {
                 if (_dirtyCount>0) {
@@ -541,6 +527,15 @@ public class TbKpiGroupManager
             this.beforeUpdate(bean); // listener callback
             sql = new StringBuffer("UPDATE tb_kpi_group SET ");
             boolean useComma=false;
+
+            if (bean.isTbkgTotalPoinModified()) {
+                if (useComma) {
+                    sql.append(", ");
+                } else {
+                    useComma=true;
+                }
+                sql.append("tbkg_total_poin=?");
+            }
 
             if (bean.isTbkgNameModified()) {
                 if (useComma) {
@@ -997,6 +992,14 @@ public class TbKpiGroupManager
         }
         try
         {
+            if (bean.isTbkgTotalPoinModified()) {
+                _dirtyCount ++;
+                if (bean.getTbkgTotalPoin() == null) {
+                    sqlWhere.append((sqlWhere.length() == 0) ? " " : " AND ").append("tbkg_total_poin IS NULL");
+                } else {
+                    sqlWhere.append((sqlWhere.length() == 0) ? " " : " AND ").append("tbkg_total_poin = ?");
+                }
+            }
             if (bean.isTbkgNameModified()) {
                 _dirtyCount ++;
                 if (bean.getTbkgName() == null) {
@@ -1045,6 +1048,10 @@ public class TbKpiGroupManager
         int _dirtyCount = 0;
         try
         {
+            if (bean.isTbkgTotalPoinModified()) {
+                log.debug("Setting for " + _dirtyCount + " [" + bean.getTbkgTotalPoin() + "]");
+                if (bean.getTbkgTotalPoin() == null) { ps.setNull(++_dirtyCount, Types.INTEGER); } else { Manager.setInteger(ps, ++_dirtyCount, bean.getTbkgTotalPoin()); }
+            }
             if (bean.isTbkgNameModified()) {
                 switch (searchType){
                     case SEARCH_EXACT:
@@ -1166,9 +1173,10 @@ public class TbKpiGroupManager
         TbKpiGroupBean bean = this.createTbKpiGroupBean();
         try
         {
-            bean.setTbkgName(rs.getString(1));
-            bean.setTbkgKpiGroupId(rs.getString(2));
-            bean.setTbkgId(Manager.getInteger(rs, 3));
+            bean.setTbkgTotalPoin(Manager.getInteger(rs, 1));
+            bean.setTbkgName(rs.getString(2));
+            bean.setTbkgKpiGroupId(rs.getString(3));
+            bean.setTbkgId(Manager.getInteger(rs, 4));
         }
         catch(SQLException e)
         {
@@ -1183,6 +1191,13 @@ public class TbKpiGroupManager
     //29A
     public TbKpiGroupBean toBean(TbKpiGroupBeanModel beanModel, TbKpiGroupBean bean)
     {
+		if (beanModel.getTbkgTotalPoin() != null)
+			bean.setTbkgTotalPoin(beanModel.getTbkgTotalPoin());
+
+		if (bean.getTbkgTotalPoin() != null)
+		if ("java.sql.Timestamp".equals(bean.getTbkgTotalPoin().getClass().getName()))
+			bean.setTbkgTotalPoin(beanModel.getTbkgTotalPoin());
+		
 		if (beanModel.getTbkgName() != null)
 			bean.setTbkgName(beanModel.getTbkgName());
 
@@ -1204,44 +1219,45 @@ public class TbKpiGroupManager
 		if ("java.sql.Timestamp".equals(bean.getTbkgId().getClass().getName()))
 			bean.setTbkgId(beanModel.getTbkgId());
 		
-        return bean;
+		return bean;
     }
 	
     //29AA
     public TbKpiGroupBean[] toBeans(TbKpiGroupBeanModel beanModels[])
     {
-    	int beanModelsCount = beanModels.length;
-    	TbKpiGroupBean beans[] = new TbKpiGroupBean[beanModelsCount];
-    	
+		int beanModelsCount = beanModels.length;
+		TbKpiGroupBean beans[] = new TbKpiGroupBean[beanModelsCount];
+		
 		for (int i = 0; i < beanModelsCount; i++) {
 			beans[i] = toBean(beanModels[i], beans[i]);
 		}
-    	
-    	return beans;
+		
+		return beans;
     }
-
+	
     //29C
     public TbKpiGroupBeanModel toBeanModel(TbKpiGroupBean bean)
     {
-    	TbKpiGroupBeanModel beanModel = new TbKpiGroupBeanModel();
+		TbKpiGroupBeanModel beanModel = new TbKpiGroupBeanModel();
+		beanModel.setTbkgTotalPoin(bean.getTbkgTotalPoin());
 		beanModel.setTbkgName(bean.getTbkgName());
 		beanModel.setTbkgKpiGroupId(bean.getTbkgKpiGroupId());
 		beanModel.setTbkgId(bean.getTbkgId());
 		return beanModel;
     }
-    
+	
     //29CC
     public TbKpiGroupBeanModel[] toBeanModels(TbKpiGroupBean beans[])
     {
-    	int beansCount = beans.length;
-    	TbKpiGroupBeanModel beanModels[] = new TbKpiGroupBeanModel[beansCount];
-    	
+		int beansCount = beans.length;
+		TbKpiGroupBeanModel beanModels[] = new TbKpiGroupBeanModel[beansCount];
+		
 		for (int i = 0; i < beansCount; i++) {
 			beanModels[i] = toBeanModel(beans[i]);
 		}
-    	
-    	return beanModels;
-    }
+		
+		return beanModels;
+    }	
 	
     /**
      * Transforms a ResultSet iterating on the tb_kpi_group table on a TbKpiGroupBean bean according to a list of fields.
@@ -1262,6 +1278,10 @@ public class TbKpiGroupManager
             {
                 switch(fieldList[i])
                 {
+                    case ID_TBKG_TOTAL_POIN:
+                        ++pos;
+                        bean.setTbkgTotalPoin(Manager.getInteger(rs, pos));
+                        break;
                     case ID_TBKG_NAME:
                         ++pos;
                         bean.setTbkgName(rs.getString(pos));
@@ -1302,6 +1322,7 @@ public class TbKpiGroupManager
         TbKpiGroupBean bean = this.createTbKpiGroupBean();
         try
         {
+            bean.setTbkgTotalPoin(Manager.getInteger(rs, "tbkg_total_poin"));
             bean.setTbkgName(rs.getString("tbkg_name"));
             bean.setTbkgKpiGroupId(rs.getString("tbkg_kpi_group_id"));
             bean.setTbkgId(Manager.getInteger(rs, "tbkg_id"));

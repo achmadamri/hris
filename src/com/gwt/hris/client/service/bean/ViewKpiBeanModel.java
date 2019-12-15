@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 public class ViewKpiBeanModel extends ReturnBean implements Serializable
 {
-	private static final long serialVersionUID = 5127923110693719348L;
+	private static final long serialVersionUID = -8807734337778090459L;
 	
 	private ViewKpiBeanModel beanModels[];
 	

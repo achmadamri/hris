@@ -28,8 +28,13 @@ import org.apache.commons.lang.builder.ToStringStyle;
 public class TbKpiGroupBean
     implements Serializable, GeneratedBean
 {
-	private static final long serialVersionUID = -1897561318385902685L;
+	private static final long serialVersionUID = -7376587330547514224L;
 	
+    private Integer tbkgTotalPoin;
+
+    private boolean tbkgTotalPoinIsModified = false;
+    private boolean tbkgTotalPoinIsInitialized = false;
+
     private String tbkgName;
 
     private boolean tbkgNameIsModified = false;
@@ -53,6 +58,77 @@ public class TbKpiGroupBean
      */
     protected TbKpiGroupBean()
     {
+    }
+
+    /**
+     * Getter method for tbkgTotalPoin.
+     * <br>
+     * Meta Data Information (in progress):
+     * <ul>
+     * <li>full name: tb_kpi_group.tbkg_total_poin</li>
+     * <li>column size: 10</li>
+     * <li>jdbc type returned by the driver: Types.INTEGER</li>
+     * </ul>
+     *
+     * @return the value of tbkgTotalPoin
+     */
+    public Integer getTbkgTotalPoin()
+    {
+        return tbkgTotalPoin;
+    }
+
+    /**
+     * Setter method for tbkgTotalPoin.
+     * <br>
+     * The new value is set only if compareTo() says it is different,
+     * or if one of either the new value or the current value is null.
+     * In case the new value is different, it is set and the field is marked as 'modified'.
+     *
+     * @param newVal the new value to be assigned to tbkgTotalPoin
+     */
+    public void setTbkgTotalPoin(Integer newVal)
+    {
+        if ((newVal != null && tbkgTotalPoin != null && (newVal.compareTo(tbkgTotalPoin) == 0)) ||
+            (newVal == null && tbkgTotalPoin == null && tbkgTotalPoinIsInitialized)) {
+            return;
+        }
+        tbkgTotalPoin = newVal;
+        tbkgTotalPoinIsModified = true;
+        tbkgTotalPoinIsInitialized = true;
+    }
+
+    /**
+     * Setter method for tbkgTotalPoin.
+     * <br>
+     * Convenient for those who do not want to deal with Objects for primary types.
+     *
+     * @param newVal the new value to be assigned to tbkgTotalPoin
+     */
+    public void setTbkgTotalPoin(int newVal)
+    {
+        setTbkgTotalPoin(new Integer(newVal));
+    }
+
+    /**
+     * Determines if the tbkgTotalPoin has been modified.
+     *
+     * @return true if the field has been modified, false if the field has not been modified
+     */
+    public boolean isTbkgTotalPoinModified()
+    {
+        return tbkgTotalPoinIsModified;
+    }
+
+    /**
+     * Determines if the tbkgTotalPoin has been initialized.
+     * <br>
+     * It is useful to determine if a field is null on purpose or just because it has not been initialized.
+     *
+     * @return true if the field has been initialized, false otherwise
+     */
+    public boolean isTbkgTotalPoinInitialized()
+    {
+        return tbkgTotalPoinIsInitialized;
     }
 
     /**
@@ -180,7 +256,6 @@ public class TbKpiGroupBean
      * Meta Data Information (in progress):
      * <ul>
      * <li>full name: tb_kpi_group.tbkg_id</li>
-     * <li> imported key: tb_kpi.tbkg_id</li>
      * <li>column size: 10</li>
      * <li>jdbc type returned by the driver: Types.INTEGER</li>
      * </ul>
@@ -275,7 +350,7 @@ public class TbKpiGroupBean
      */
     public boolean isModified()
     {
-        return tbkgNameIsModified 		|| tbkgKpiGroupIdIsModified  		|| tbkgIdIsModified  ;
+        return tbkgTotalPoinIsModified 		|| tbkgNameIsModified  		|| tbkgKpiGroupIdIsModified  		|| tbkgIdIsModified  ;
     }
 
     /**
@@ -283,6 +358,7 @@ public class TbKpiGroupBean
      */
     public void resetIsModified()
     {
+        tbkgTotalPoinIsModified = false;
         tbkgNameIsModified = false;
         tbkgKpiGroupIdIsModified = false;
         tbkgIdIsModified = false;
@@ -295,6 +371,7 @@ public class TbKpiGroupBean
      */
     public void copy(TbKpiGroupBean bean)
     {
+        setTbkgTotalPoin(bean.getTbkgTotalPoin());
         setTbkgName(bean.getTbkgName());
         setTbkgKpiGroupId(bean.getTbkgKpiGroupId());
         setTbkgId(bean.getTbkgId());
@@ -306,6 +383,7 @@ public class TbKpiGroupBean
     public Map getDictionnary()
     {
         Map dictionnary = new HashMap();
+        dictionnary.put("tbkg_total_poin", getTbkgTotalPoin() == null ? "" : getTbkgTotalPoin().toString());
         dictionnary.put("tbkg_name", getTbkgName() == null ? "" : getTbkgName().toString());
         dictionnary.put("tbkg_kpi_group_id", getTbkgKpiGroupId() == null ? "" : getTbkgKpiGroupId().toString());
         dictionnary.put("tbkg_id", getTbkgId() == null ? "" : getTbkgId().toString());
@@ -329,6 +407,8 @@ public class TbKpiGroupBean
     {
         if (null == column || "".equals(column)) {
             return "";
+        } else if ("tbkg_total_poin".equalsIgnoreCase(column) || "tbkgTotalPoin".equalsIgnoreCase(column)) {
+            return getTbkgTotalPoin() == null ? "" : getTbkgTotalPoin().toString();
         } else if ("tbkg_name".equalsIgnoreCase(column) || "tbkgName".equalsIgnoreCase(column)) {
             return getTbkgName() == null ? "" : getTbkgName().toString();
         } else if ("tbkg_kpi_group_id".equalsIgnoreCase(column) || "tbkgKpiGroupId".equalsIgnoreCase(column)) {
@@ -350,6 +430,7 @@ public class TbKpiGroupBean
 
 		TbKpiGroupBean obj = (TbKpiGroupBean) object;
 		return new EqualsBuilder()
+            .append(getTbkgTotalPoin(), obj.getTbkgTotalPoin())
             .append(getTbkgName(), obj.getTbkgName())
             .append(getTbkgKpiGroupId(), obj.getTbkgKpiGroupId())
             .append(getTbkgId(), obj.getTbkgId())
@@ -362,6 +443,7 @@ public class TbKpiGroupBean
 	public int hashCode()
 	{
 		return new HashCodeBuilder(-82280557, -700257973)
+            .append(getTbkgTotalPoin())
             .append(getTbkgName())
             .append(getTbkgKpiGroupId())
             .append(getTbkgId())
@@ -386,6 +468,7 @@ public class TbKpiGroupBean
 	 */
 	public String toString(ToStringStyle style) {
 		return new ToStringBuilder(this, style)
+            .append("tbkg_total_poin", getTbkgTotalPoin())
             .append("tbkg_name", getTbkgName())
             .append("tbkg_kpi_group_id", getTbkgKpiGroupId())
             .append("tbkg_id", getTbkgId())
@@ -397,6 +480,7 @@ public class TbKpiGroupBean
     {
         TbKpiGroupBean obj = (TbKpiGroupBean) object;
         return new CompareToBuilder()
+            .append(getTbkgTotalPoin(), obj.getTbkgTotalPoin())
             .append(getTbkgName(), obj.getTbkgName())
             .append(getTbkgKpiGroupId(), obj.getTbkgKpiGroupId())
             .append(getTbkgId(), obj.getTbkgId())

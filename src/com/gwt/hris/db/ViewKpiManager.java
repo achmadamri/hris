@@ -327,6 +327,18 @@ public class ViewKpiManager
 
 
     /**
+     * Deletes all rows from view_kpi table.
+     * @return the number of deleted rows.
+     * @throws DAOException
+     */
+    //10
+    public int deleteAll() throws DAOException
+    {
+        return this.deleteByWhere("");
+    }
+
+
+    /**
      * Deletes rows from the view_kpi table using a 'where' clause.
      * It is up to you to pass the 'WHERE' in your where clausis.
      * <br>Attention, if 'WHERE' is omitted it will delete all records.
@@ -1653,26 +1665,26 @@ public class ViewKpiManager
 		if ("java.sql.Timestamp".equals(bean.getTbkgId().getClass().getName()))
 			bean.setTbkgId(beanModel.getTbkgId());
 		
-        return bean;
+		return bean;
     }
 	
     //29AA
     public ViewKpiBean[] toBeans(ViewKpiBeanModel beanModels[])
     {
-    	int beanModelsCount = beanModels.length;
-    	ViewKpiBean beans[] = new ViewKpiBean[beanModelsCount];
-    	
+		int beanModelsCount = beanModels.length;
+		ViewKpiBean beans[] = new ViewKpiBean[beanModelsCount];
+		
 		for (int i = 0; i < beanModelsCount; i++) {
 			beans[i] = toBean(beanModels[i], beans[i]);
 		}
-    	
-    	return beans;
+		
+		return beans;
     }
-
+	
     //29C
     public ViewKpiBeanModel toBeanModel(ViewKpiBean bean)
     {
-    	ViewKpiBeanModel beanModel = new ViewKpiBeanModel();
+		ViewKpiBeanModel beanModel = new ViewKpiBeanModel();
 		beanModel.setTbeId(bean.getTbeId());
 		beanModel.setTbkBobot(bean.getTbkBobot());
 		beanModel.setTbkTargetNilai5(bean.getTbkTargetNilai5());
@@ -1688,19 +1700,19 @@ public class ViewKpiManager
 		beanModel.setTbkgId(bean.getTbkgId());
 		return beanModel;
     }
-    
+	
     //29CC
     public ViewKpiBeanModel[] toBeanModels(ViewKpiBean beans[])
     {
-    	int beansCount = beans.length;
-    	ViewKpiBeanModel beanModels[] = new ViewKpiBeanModel[beansCount];
-    	
+		int beansCount = beans.length;
+		ViewKpiBeanModel beanModels[] = new ViewKpiBeanModel[beansCount];
+		
 		for (int i = 0; i < beansCount; i++) {
 			beanModels[i] = toBeanModel(beans[i]);
 		}
-    	
-    	return beanModels;
-    }
+		
+		return beanModels;
+    }	
 	
     /**
      * Transforms a ResultSet iterating on the view_kpi table on a ViewKpiBean bean according to a list of fields.

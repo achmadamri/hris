@@ -2,11 +2,15 @@ package com.gwt.hris.server.service.performance;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.PagingLoadConfig;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
+import com.google.gwt.dev.util.collect.HashMap;
 import com.gwt.hris.client.service.bean.ReturnBean;
 import com.gwt.hris.client.service.bean.TbEmployeeBeanModel;
 import com.gwt.hris.client.service.bean.TbKpiAssignBeanModel;
@@ -17,6 +21,8 @@ import com.gwt.hris.db.TbEmployeeBean;
 import com.gwt.hris.db.TbEmployeeManager;
 import com.gwt.hris.db.TbKpiAssignBean;
 import com.gwt.hris.db.TbKpiAssignManager;
+import com.gwt.hris.db.TbKpiBean;
+import com.gwt.hris.db.TbKpiManager;
 import com.gwt.hris.db.ViewKpiAssignBean;
 import com.gwt.hris.db.ViewKpiAssignManager;
 import com.gwt.hris.server.service.MainRemoteServiceServlet;
@@ -43,23 +49,51 @@ public class KPIAssignImpl extends MainRemoteServiceServlet implements KPIAssign
 			Manager.getInstance().beginTransaction();
 
 			Integer ids[] = (Integer[]) beanModel.get("tbkIds");
-			for (int i = 0; i < ids.length; i++) {
-				TbKpiAssignBean bean = null;
-				bean = TbKpiAssignManager.getInstance().createTbKpiAssignBean();
-				bean = TbKpiAssignManager.getInstance().toBean(beanModel, bean);
-				bean.setTbkId(ids[i]);
-				bean.setTbkaStatus(0);
-				bean.setTbkaPoin(0);
-				bean.setTbkaSpvId(tbEmployeeBeanModel.getTbeId());
-				TbKpiAssignManager.getInstance().save(bean);
+			String strIds = "0";
+			for (Integer id : ids) {
+				strIds += "," + id;
 			}
-
-			returnValue.setOperationStatus(true);
-			returnValue.setMessage("Success Saved");
+			TbKpiBean tbKpiBeans[] = TbKpiManager.getInstance().loadByWhere("where tbk_id in (" + strIds + ")");
+			Map<Integer, Integer> mapTbKpi = new HashMap<Integer, Integer>();
+			for (TbKpiBean tbKpiBean : tbKpiBeans) {
+				Integer tbkgId = tbKpiBean.getTbkgId();
+				Integer tbkgTotalPoin = mapTbKpi.get(tbkgId) == null ? 0 : mapTbKpi.get(tbkgId);
+				tbkgTotalPoin += tbKpiBean.getTbkBobot();
+				mapTbKpi.put(tbkgId, tbkgTotalPoin);
+			}
+			Set<Integer> set = mapTbKpi.keySet();
+			Iterator<Integer> itr = set.iterator();
+			boolean checked = true;
+			while (itr.hasNext()) {
+				Integer key = (Integer) itr.next();
+				Integer totalPoin = mapTbKpi.get(key);
+				if (totalPoin < 100) {
+					checked = false;
+				}
+			}
 			
-			SystemUtil.getInstance().notification(SystemUtil.CHANNEL_EMAIL, 3, SystemUtil.UI_KPI_APPROVAL_ASSIGN, tbEmployeeBeanModel.getTbeId(), 0, new String[]{""});
+			if (checked) {
+				for (int i = 0; i < ids.length; i++) {
+					TbKpiAssignBean bean = null;
+					bean = TbKpiAssignManager.getInstance().createTbKpiAssignBean();
+					bean = TbKpiAssignManager.getInstance().toBean(beanModel, bean);
+					bean.setTbkId(ids[i]);
+					bean.setTbkaStatus(0);
+					bean.setTbkaPoin(0);
+					bean.setTbkaSpvId(tbEmployeeBeanModel.getTbeId());
+					TbKpiAssignManager.getInstance().save(bean);
+				}
 
-			commit = true;
+				returnValue.setOperationStatus(true);
+				returnValue.setMessage("Success Saved");
+				
+				SystemUtil.getInstance().notification(SystemUtil.CHANNEL_EMAIL, 3, SystemUtil.UI_KPI_APPROVAL_ASSIGN, tbEmployeeBeanModel.getTbeId(), 0, new String[]{""});
+
+				commit = true;
+			} else {
+				returnValue.setOperationStatus(false);
+				returnValue.setMessage("KPI group is not 100%");
+			}
 		} catch (Exception e) {
 			returnValue.setOperationStatus(false);
 			returnValue.setMessage(e.getMessage());

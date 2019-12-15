@@ -248,11 +248,11 @@ public class WindowKPIAssignAddEdit extends WindowMain {
 		columns.add(new ColumnConfig("tbkId", "<center><b>KPI ID</b></center>", 50));
 		columns.add(new ColumnConfig("tbkgName", "<center><b>KPI Group</b></center>", 100));
 		columns.add(new ColumnConfig("tbkDescription", "<center><b>Description</b></center>", 200));
-		columns.add(new ColumnConfig("tbkTargetNilai1", "<center><b>Nilai 1</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai2", "<center><b>Nilai 2</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai3", "<center><b>Nilai 3</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai4", "<center><b>Nilai 4</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai5", "<center><b>Nilai 5</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai1", "<center><b>Score 1</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai2", "<center><b>Score 2</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai3", "<center><b>Score 3</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai4", "<center><b>Score 4</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai5", "<center><b>Score 5</b></center>", 100));
 
 		ColumnConfig columnConfig = new ColumnConfig("tbkBobot", "<center><b>Bobot</b></center>", 75);
 		columnConfig.setRenderer(new GridCellRenderer<ModelData>() {

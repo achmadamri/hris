@@ -1,7 +1,6 @@
 package com.gwt.hris.client.window.performance;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,7 @@ import com.extjs.gxt.ui.client.event.GridEvent;
 import com.extjs.gxt.ui.client.event.Listener;
 import com.extjs.gxt.ui.client.event.MessageBoxEvent;
 import com.extjs.gxt.ui.client.event.SelectionListener;
+import com.extjs.gxt.ui.client.store.GroupingStore;
 import com.extjs.gxt.ui.client.store.ListStore;
 import com.extjs.gxt.ui.client.util.Margins;
 import com.extjs.gxt.ui.client.widget.ContentPanel;
@@ -30,16 +30,16 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.ComboBox.TriggerAction;
 import com.extjs.gxt.ui.client.widget.form.SimpleComboBox;
 import com.extjs.gxt.ui.client.widget.form.TextField;
-import com.extjs.gxt.ui.client.widget.grid.AggregationRenderer;
-import com.extjs.gxt.ui.client.widget.grid.AggregationRowConfig;
 import com.extjs.gxt.ui.client.widget.grid.CheckBoxSelectionModel;
 import com.extjs.gxt.ui.client.widget.grid.ColumnConfig;
 import com.extjs.gxt.ui.client.widget.grid.ColumnData;
 import com.extjs.gxt.ui.client.widget.grid.ColumnModel;
 import com.extjs.gxt.ui.client.widget.grid.Grid;
 import com.extjs.gxt.ui.client.widget.grid.GridCellRenderer;
+import com.extjs.gxt.ui.client.widget.grid.GridGroupRenderer;
+import com.extjs.gxt.ui.client.widget.grid.GroupColumnData;
+import com.extjs.gxt.ui.client.widget.grid.GroupingView;
 import com.extjs.gxt.ui.client.widget.grid.HeaderGroupConfig;
-import com.extjs.gxt.ui.client.widget.grid.SummaryType;
 import com.extjs.gxt.ui.client.widget.layout.BoxLayout.BoxLayoutPack;
 import com.extjs.gxt.ui.client.widget.layout.FitLayout;
 import com.extjs.gxt.ui.client.widget.layout.HBoxLayout;
@@ -84,7 +84,7 @@ public class WindowKPIApprovalScoring extends WindowMain {
 	Button btnSearchReset;
 	RpcProxy<PagingLoadResult<ViewKpiAssignBeanModel>> proxy;
 	PagingLoader<PagingLoadResult<ModelData>> pagingLoader;
-	ListStore<ViewKpiAssignBeanModel> pagingStore;
+	GroupingStore<ViewKpiAssignBeanModel> pagingStore;
 	PagingToolBar bottomToolBar = new PagingToolBar(999999);
 	Grid<ViewKpiAssignBeanModel> grid;
 
@@ -251,22 +251,22 @@ public class WindowKPIApprovalScoring extends WindowMain {
 		pagingLoader = new BasePagingLoader<PagingLoadResult<ModelData>>(proxy);
 		pagingLoader.setRemoteSort(true);
 
-		pagingStore = new ListStore<ViewKpiAssignBeanModel>(pagingLoader);
+		pagingStore = new GroupingStore<ViewKpiAssignBeanModel>(pagingLoader);
+		pagingStore.groupBy("tbkgName");
 
 		bottomToolBar.bind(pagingLoader);
 
 		List<ColumnConfig> columns = new ArrayList<ColumnConfig>();
 		columns.add(checkBoxSelectionModel.getColumn());
 		columns.add(new ColumnConfig("tbkId", "<center><b>KPI ID</b></center>", 50));
-		columns.add(new ColumnConfig("tbkgName", "<center><b>KPI Group</b></center>", 100));
 		columns.add(new ColumnConfig("tbkDescription", "<center><b>Description</b></center>", 200));
-		columns.add(new ColumnConfig("tbkTargetNilai1", "<center><b>Nilai 1</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai2", "<center><b>Nilai 2</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai3", "<center><b>Nilai 3</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai4", "<center><b>Nilai 4</b></center>", 100));
-		columns.add(new ColumnConfig("tbkTargetNilai5", "<center><b>Nilai 5</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai1", "<center><b>Score 1</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai2", "<center><b>Score 2</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai3", "<center><b>Score 3</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai4", "<center><b>Score 4</b></center>", 100));
+		columns.add(new ColumnConfig("tbkTargetNilai5", "<center><b>Score 5</b></center>", 100));
 
-		ColumnConfig columnConfig = new ColumnConfig("tbkBobot", "<center><b>Bobot</b></center>", 75);
+		ColumnConfig columnConfig = new ColumnConfig("tbkBobot", "<center><b>Weight (%)</b></center>", 75);
 		columnConfig.setRenderer(new GridCellRenderer<ModelData>() {
 			@Override
 			public Object render(ModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<ModelData> store, Grid<ModelData> grid) {
@@ -278,7 +278,7 @@ public class WindowKPIApprovalScoring extends WindowMain {
 
 		columns.add(new ColumnConfig("tbkaEvaluasi", "<center><b>Evaluation</b></center>", 200));
 		columns.add(new ColumnConfig("tbkaAction", "<center><b>Suggested Action</b></center>", 200));
-		columns.add(new ColumnConfig("tbkaPoin", "<center><b>Poin</b></center>", 100));
+		columns.add(new ColumnConfig("tbkaPoin", "<center><b>Score</b></center>", 100));
 
 		columnConfig = new ColumnConfig("tbkaStatus", "<center><b>Status</b></center>", 75);
 		columnConfig.setRenderer(new GridCellRenderer<ModelData>() {
@@ -351,45 +351,18 @@ public class WindowKPIApprovalScoring extends WindowMain {
 		columns.add(ccActions);
 
 		ColumnModel cm = new ColumnModel(columns);
-		cm.addHeaderGroup(0, 4, new HeaderGroupConfig("<center><b>Target Nilai</b></center>", 1, 5));
+		cm.addHeaderGroup(0, 3, new HeaderGroupConfig("<center><b>Target Score</b></center>", 1, 5));
 
-		AggregationRowConfig<ViewKpiAssignBeanModel> aggregation = new AggregationRowConfig<ViewKpiAssignBeanModel>();
-		aggregation.setHtml("tbkgName", "Total");
-
-		aggregation.setSummaryType("tbkBobot", SummaryType.SUM);
-		aggregation.setRenderer("tbkBobot", new AggregationRenderer<ViewKpiAssignBeanModel>() {
-			public Object render(Number value, int colIndex, Grid<ViewKpiAssignBeanModel> grid, ListStore<ViewKpiAssignBeanModel> store) {
-				if (value != null) {
-					return value + "%";
-				} else {
-					return "";
-				}
+		GroupingView view = new GroupingView();
+		view.setShowGroupedColumn(false);
+		view.setGroupRenderer(new GridGroupRenderer() {
+			public String render(GroupColumnData data) {
+				return "KPI Group : " + data.group;
 			}
 		});
-
-		aggregation.setSummaryType("tbkaPoin", SummaryType.AVG);
-		aggregation.setRenderer("tbkaPoin", new AggregationRenderer<ViewKpiAssignBeanModel>() {
-			public Object render(Number value, int colIndex, Grid<ViewKpiAssignBeanModel> grid, ListStore<ViewKpiAssignBeanModel> store) {
-				if (value != null) {
-					List<ViewKpiAssignBeanModel> x = store.getModels();
-					Iterator<ViewKpiAssignBeanModel> y = x.iterator();
-					double poinBobot = 0;
-					double sumBobot = 0;
-					while (y.hasNext()) {
-						ViewKpiAssignBeanModel model = y.next();
-						poinBobot = poinBobot + (model.getTbkaPoin() * model.getTbkBobot());
-						sumBobot = sumBobot + model.getTbkBobot();
-					}
-					return poinBobot / sumBobot;
-				} else {
-					return "";
-				}
-			}
-		});
-
-		cm.addAggregationRow(aggregation);
-
+		
 		grid = new Grid<ViewKpiAssignBeanModel>(pagingStore, cm);
+		grid.setView(view);
 		grid.addListener(Events.Attach, new Listener<GridEvent<ViewKpiAssignBeanModel>>() {
 			public void handleEvent(GridEvent<ViewKpiAssignBeanModel> be) {
 				PagingLoadConfig config = new BasePagingLoadConfig();
