@@ -2,6 +2,7 @@ package com.gwt.hris.server.service.performance;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,6 @@ import java.util.Set;
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.PagingLoadConfig;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
-import com.google.gwt.dev.util.collect.HashMap;
 import com.gwt.hris.client.service.bean.ReturnBean;
 import com.gwt.hris.client.service.bean.TbEmployeeBeanModel;
 import com.gwt.hris.client.service.bean.TbKpiAssignBeanModel;
