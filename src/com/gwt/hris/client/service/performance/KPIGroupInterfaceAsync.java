@@ -5,6 +5,7 @@ import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwt.hris.client.service.bean.ReturnBean;
 import com.gwt.hris.client.service.bean.TbKpiGroupBeanModel;
+import com.gwt.hris.client.service.bean.TbProjectBeanModel;
 
 public interface KPIGroupInterfaceAsync {
 	void submitKpiGroup(TbKpiGroupBeanModel TbKpiGroupBeanModel, AsyncCallback<ReturnBean> callback);
@@ -18,4 +19,6 @@ public interface KPIGroupInterfaceAsync {
 	void getKpiGroupPaging(PagingLoadConfig config, String searchBy, String searchValue, AsyncCallback<PagingLoadResult<TbKpiGroupBeanModel>> callback);
 
 	void getTbKpiGroupAll(AsyncCallback<TbKpiGroupBeanModel> callback);
+	
+	void getTbProjectAll(AsyncCallback<TbProjectBeanModel> callback);
 }

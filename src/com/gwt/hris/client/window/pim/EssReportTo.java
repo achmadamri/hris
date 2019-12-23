@@ -527,9 +527,9 @@ public class EssReportTo extends EssMainFP {
 							if (cmbEmployee.getValue() != null)
 								beanModel.setTbrtSpv(Integer.parseInt(cmbEmployee.getValue().get("id").toString()));
 						} else {
-							if (cmbEmployee.getValue() != null)
-								beanModel.setTbrtSpv(Integer.parseInt(cmbEmployee.getValue().get("id").toString()));
 							beanModel.setTbrtSpv(id);
+							if (cmbEmployee.getValue() != null)
+								beanModel.setTbeId(Integer.parseInt(cmbEmployee.getValue().get("id").toString()));
 						}
 
 						beanModel.setTbrtReportingMethod(Integer.parseInt(cmbReportingMethod.getValue().get("id").toString()));

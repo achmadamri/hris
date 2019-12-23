@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.gwt.hris.client.service.bean.ReturnBean;
 import com.gwt.hris.client.service.bean.TbKpiGroupBeanModel;
+import com.gwt.hris.client.service.bean.TbProjectBeanModel;
 
 @RemoteServiceRelativePath("kpigroup")
 public interface KPIGroupInterface extends RemoteService {
@@ -20,4 +21,6 @@ public interface KPIGroupInterface extends RemoteService {
 	PagingLoadResult<TbKpiGroupBeanModel> getKpiGroupPaging(final PagingLoadConfig config, String searchBy, String searchValue);
 
 	TbKpiGroupBeanModel getTbKpiGroupAll();
+	
+	TbProjectBeanModel getTbProjectAll();
 }

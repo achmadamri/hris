@@ -9,10 +9,13 @@ import com.extjs.gxt.ui.client.data.PagingLoadConfig;
 import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.gwt.hris.client.service.bean.ReturnBean;
 import com.gwt.hris.client.service.bean.TbKpiGroupBeanModel;
+import com.gwt.hris.client.service.bean.TbProjectBeanModel;
 import com.gwt.hris.client.service.performance.KPIGroupInterface;
 import com.gwt.hris.db.Manager;
 import com.gwt.hris.db.TbKpiGroupBean;
 import com.gwt.hris.db.TbKpiGroupManager;
+import com.gwt.hris.db.TbProjectBean;
+import com.gwt.hris.db.TbProjectManager;
 import com.gwt.hris.server.service.MainRemoteServiceServlet;
 import com.gwt.hris.util.ClassUtil;
 import com.gwt.hris.util.StringUtil;
@@ -59,6 +62,8 @@ public class KPIGroupImpl extends MainRemoteServiceServlet implements KPIGroupIn
 				}
 
 				bean = TbKpiGroupManager.getInstance().toBean(beanModel, bean);
+				
+				if (bean.getTbpId() == 0) bean.setTbpId(null);
 
 				TbKpiGroupManager.getInstance().save(bean);
 
@@ -243,6 +248,26 @@ public class KPIGroupImpl extends MainRemoteServiceServlet implements KPIGroupIn
 		try {
 			TbKpiGroupBean tbKpiGroupBeans[] = TbKpiGroupManager.getInstance().loadAll();
 			TbKpiGroupBeanModel tbKpiGroupBeanModels[] = TbKpiGroupManager.getInstance().toBeanModels(tbKpiGroupBeans);
+
+			returnValue.setModels(tbKpiGroupBeanModels);
+			returnValue.setOperationStatus(true);
+			returnValue.setMessage("");
+		} catch (Exception e) {
+			returnValue.setOperationStatus(false);
+			returnValue.setMessage(e.getMessage());
+			ClassUtil.getInstance().logError(log, e);
+			e.printStackTrace();
+		}
+
+		return returnValue;
+	}
+
+	public TbProjectBeanModel getTbProjectAll() {
+		TbProjectBeanModel returnValue = new TbProjectBeanModel();
+
+		try {
+			TbProjectBean tbKpiGroupBeans[] = TbProjectManager.getInstance().loadAll();
+			TbProjectBeanModel tbKpiGroupBeanModels[] = TbProjectManager.getInstance().toBeanModels(tbKpiGroupBeans);
 
 			returnValue.setModels(tbKpiGroupBeanModels);
 			returnValue.setOperationStatus(true);
