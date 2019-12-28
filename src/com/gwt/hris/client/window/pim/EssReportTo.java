@@ -259,7 +259,7 @@ public class EssReportTo extends EssMainFP {
 				hfReportingMethodId.setValue(result.getTbrtReportingMethod().toString());
 				fillCmbReportingMethod();
 				
-				hfEmployeeId.setValue(result.getTbrtSpv() == null ? "" : result.getTbrtSpv().toString());
+				hfEmployeeId.setValue(result.getTbeId() == null ? "" : result.getTbeId().toString());
 				
 				if (tbAugId != null)
 					employeeListInterfaceAsync.getTbEmployeeAll(tbEmployeeAllCallback);
