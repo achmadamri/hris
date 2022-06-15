@@ -37,19 +37,21 @@ public class MainImpl extends MainRemoteServiceServlet implements MainInterface 
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		TbLoginBeanModel returnValue = new TbLoginBeanModel();
-		TbLoginBeanModel tbLoginBeanModel = (TbLoginBeanModel) httpSession.getAttribute("TbLoginBeanModel");
+		//TbLoginBeanModel tbLoginBeanModel = (TbLoginBeanModel) httpSession.getAttribute("TbLoginBeanModel");
+		TbLoginBeanModel tbLoginBeanModel = null;
 
-		String strWhere = "";
+//		String strWhere = "";
+		String strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + strPassword.replaceAll("'", "") + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";
 		
-		if (tbLoginBeanModel == null) {
-			strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + strPassword.replaceAll("'", "") + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";
-		} else {
-			if (strUserName == null && strPassword == null) {
-				strWhere = "where tbl_username = '" + tbLoginBeanModel.getTblUsername() + "' and tbl_password = '" + tbLoginBeanModel.getTblPassword() + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";				
-			} else {
-				strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + strPassword.replaceAll("'", "") + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";				
-			}
-		}
+//		if (tbLoginBeanModel == null) {
+//			strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + strPassword.replaceAll("'", "") + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";
+//		} else {
+//			if (strUserName == null && strPassword == null) {
+//				strWhere = "where tbl_username = '" + tbLoginBeanModel.getTblUsername() + "' and tbl_password = '" + tbLoginBeanModel.getTblPassword() + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";				
+//			} else {
+//				strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + strPassword.replaceAll("'", "") + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";				
+//			}
+//		}
 		
 		try {
 			TbLoginBean tbLoginBeans[] = TbLoginManager.getInstance().loadByWhere(strWhere);
