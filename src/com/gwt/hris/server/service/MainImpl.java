@@ -42,12 +42,12 @@ public class MainImpl extends MainRemoteServiceServlet implements MainInterface 
 		String strWhere = "";
 		
 		if (tbLoginBeanModel == null) {
-			strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + MD5.getInstance().get(strPassword.replaceAll("'", "")) + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";
+			strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + strPassword.replaceAll("'", "") + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";
 		} else {
 			if (strUserName == null && strPassword == null) {
 				strWhere = "where tbl_username = '" + tbLoginBeanModel.getTblUsername() + "' and tbl_password = '" + tbLoginBeanModel.getTblPassword() + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";				
 			} else {
-				strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + MD5.getInstance().get(strPassword.replaceAll("'", "")) + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";				
+				strWhere = "where tbl_username = '" + strUserName.replaceAll("'", "") + "' and tbl_password = '" + strPassword.replaceAll("'", "") + "' and tbe_id in (select tbe_id from tb_employee where tbe_status = 0)";				
 			}
 		}
 		
@@ -206,7 +206,7 @@ public class MainImpl extends MainRemoteServiceServlet implements MainInterface 
 			String strData = "";
 
 			CryptoMessage cryptoMessage = new CryptoMessage();
-			strData = cryptoMessage.decrypt(strLicense);
+//			strData = cryptoMessage.decrypt(strLicense);
 
 			StringTokenizer stringTokenizer = new StringTokenizer(strData, "|");
 
