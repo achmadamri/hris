@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.systemsettings.MenuInterface
+path: 1AB218C53E336ADAD71399176F6BBB35.gwt.rpc

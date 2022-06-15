@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.time.EmployeeShiftInterface
+path: D83C51855F31A387B9E50E11936D2E03.gwt.rpc

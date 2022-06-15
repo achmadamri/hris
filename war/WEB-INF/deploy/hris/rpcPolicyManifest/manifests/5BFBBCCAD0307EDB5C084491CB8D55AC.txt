@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.MainInterface
+path: 5DE0F6B983BEBB83C4E42CCEB0BCD68B.gwt.rpc

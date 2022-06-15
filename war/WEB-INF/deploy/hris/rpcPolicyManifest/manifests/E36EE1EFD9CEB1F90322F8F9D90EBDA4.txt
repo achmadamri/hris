@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.reports.EmployeeAttendanceInterface
+path: 773BE7C35B540F6ACFF0F3FBA2668952.gwt.rpc

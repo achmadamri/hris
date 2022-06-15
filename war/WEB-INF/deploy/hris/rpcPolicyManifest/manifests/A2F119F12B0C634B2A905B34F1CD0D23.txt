@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.users.AdminUserGroupsInterface
+path: 315CF0BBF74A15C4BBE24224245318B4.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.DependentsInterface
+path: 60E39174000B21D3D1CBDA46BCD4A408.gwt.rpc

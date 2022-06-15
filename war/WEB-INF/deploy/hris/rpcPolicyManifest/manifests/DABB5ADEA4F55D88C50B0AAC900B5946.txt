@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.system.ChangePasswordInterface
+path: 23C176D43B6B8D48CEA7DEDE50A37D4E.gwt.rpc

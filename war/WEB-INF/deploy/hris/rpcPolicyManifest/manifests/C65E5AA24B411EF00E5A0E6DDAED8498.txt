@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.AssignedEducationInterface
+path: 2B58FFA94AF396857BF45669E054AA84.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.time.timesheets.TimesheetInterface
+path: EAF7D568138C8CC359620EB301F048C5.gwt.rpc

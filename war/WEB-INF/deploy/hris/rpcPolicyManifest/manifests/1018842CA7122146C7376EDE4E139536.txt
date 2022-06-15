@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.systemsettings.CronInterface
+path: 5FE63C130C91901005AE2AFE4172347A.gwt.rpc

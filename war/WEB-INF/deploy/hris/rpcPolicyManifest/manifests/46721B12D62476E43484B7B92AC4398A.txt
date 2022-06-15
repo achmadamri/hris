@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.recruitment.VacanciesInterface
+path: 68E0475F018FA0FFAEFAED84D412CB27.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.ReportToInterface
+path: D1009016E39B78390F669480360262F6.gwt.rpc

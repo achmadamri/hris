@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.PphInterface
+path: EBC2E3BB5D441413C513ED8D79A84237.gwt.rpc

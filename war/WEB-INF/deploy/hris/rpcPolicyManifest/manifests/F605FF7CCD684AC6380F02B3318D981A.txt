@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.job.JobTitleInterface
+path: B94B0C887CFBF88AA6E21A9BF1F25ABF.gwt.rpc

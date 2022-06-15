@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.nationalityandraces.NationalityInterface
+path: 7F5DA5FF68A78925DF515B2F09FF01DD.gwt.rpc

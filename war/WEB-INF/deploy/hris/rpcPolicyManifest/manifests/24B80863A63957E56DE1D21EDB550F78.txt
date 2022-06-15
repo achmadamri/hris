@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.EmergencyContactsInterface
+path: F98AAF7F6973A07642E1A8E5AF1E4FF7.gwt.rpc

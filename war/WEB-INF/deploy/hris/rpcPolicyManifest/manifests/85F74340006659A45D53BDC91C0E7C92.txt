@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.systemsettings.CurrencyInterface
+path: 9CBBBD3B52F6EC55301088AE9A6DBD87.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.leave.LeaveTypesInterface
+path: E727FA6D69B330271E3F1F2AE2C9F90F.gwt.rpc

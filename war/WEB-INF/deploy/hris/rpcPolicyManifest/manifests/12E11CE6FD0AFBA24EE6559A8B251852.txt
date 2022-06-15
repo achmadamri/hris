@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.job.JobTitleLeaveRuleInterface
+path: ABDBF47A3FAD5663AD753822711D5444.gwt.rpc

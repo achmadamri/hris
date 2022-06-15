@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.memberships.MembershipInterface
+path: 1F532CA7F766D0BE228E95040E1DED32.gwt.rpc

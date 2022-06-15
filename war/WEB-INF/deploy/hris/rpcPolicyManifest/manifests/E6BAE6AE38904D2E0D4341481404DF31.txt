@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.job.EmploymentStatusInterface
+path: D8A7248577A5808C192CAFCAC8711FFA.gwt.rpc

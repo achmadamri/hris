@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.projectinfo.CustomersInterface
+path: 270BAE3D7A6D204B7563F96FE7A94A8D.gwt.rpc

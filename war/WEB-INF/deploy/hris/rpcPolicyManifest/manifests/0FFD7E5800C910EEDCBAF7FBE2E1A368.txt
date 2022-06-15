@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.job.RenumerationInterface
+path: B51F9E48E2C268BEC63F710A208904F2.gwt.rpc

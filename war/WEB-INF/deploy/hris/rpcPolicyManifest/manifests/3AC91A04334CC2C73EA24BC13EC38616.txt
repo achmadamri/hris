@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.ImmigrationInterface
+path: 06D1516489DB573AEB69A44B49C9882D.gwt.rpc

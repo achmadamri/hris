@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.companyinfo.GeneralInterface
+path: 126E5792F6337762B46B767104F9F8D3.gwt.rpc

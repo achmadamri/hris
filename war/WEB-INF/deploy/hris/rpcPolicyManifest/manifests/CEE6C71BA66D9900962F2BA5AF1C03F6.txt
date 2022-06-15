@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.EmployeeSalaryInterface
+path: EE29C94E67E86FE78B229B00ED173702.gwt.rpc

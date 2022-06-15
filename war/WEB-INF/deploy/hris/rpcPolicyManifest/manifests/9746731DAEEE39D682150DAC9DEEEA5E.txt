@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.EmployeeListInterface
+path: D079BAF8DAD3F38E74D4FFA0D6F47896.gwt.rpc

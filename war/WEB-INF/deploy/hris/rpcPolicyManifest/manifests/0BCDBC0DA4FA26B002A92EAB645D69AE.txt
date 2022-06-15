@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.reports.EmployeePphInterface
+path: 5F370F49BC6D79A5F33971588203C18C.gwt.rpc

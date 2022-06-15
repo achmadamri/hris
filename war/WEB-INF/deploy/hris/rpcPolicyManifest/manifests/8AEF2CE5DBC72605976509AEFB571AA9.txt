@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.leave.EmployeeLeavesSummaryInterface
+path: 400BBFA9E36B0E35BD0F2B667908663E.gwt.rpc

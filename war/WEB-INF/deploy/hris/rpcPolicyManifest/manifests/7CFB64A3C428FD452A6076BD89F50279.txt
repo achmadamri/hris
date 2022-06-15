@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.AssignedLicensesInterface
+path: D7E7DF9BF28516056E21F5BACBA3A416.gwt.rpc

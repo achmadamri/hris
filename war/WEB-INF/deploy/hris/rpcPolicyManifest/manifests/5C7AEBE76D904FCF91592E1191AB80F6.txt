@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.ContactDetailsInterface
+path: 7F08D942095E03D5BB67F317960C7725.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.systemsettings.NotificationTemplateInterface
+path: 849399F3EFB0442C453BFBCA0D2D8B35.gwt.rpc

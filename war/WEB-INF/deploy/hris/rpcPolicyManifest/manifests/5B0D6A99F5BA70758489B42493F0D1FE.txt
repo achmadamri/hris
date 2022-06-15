@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.NotificationInterface
+path: 3C7C5F26732F453FF895F467741D2519.gwt.rpc

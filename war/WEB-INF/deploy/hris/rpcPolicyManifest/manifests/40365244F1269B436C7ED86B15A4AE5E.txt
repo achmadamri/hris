@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.leave.ApprovalLeavesInterface
+path: A63CCADFA45C526F549EFBA97592CC67.gwt.rpc

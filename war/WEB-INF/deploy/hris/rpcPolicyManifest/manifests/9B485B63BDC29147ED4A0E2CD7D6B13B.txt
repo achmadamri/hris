@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.performance.KPIAssignInterface
+path: CFDF09BBA0C97EA41210186DD8FAB0C8.gwt.rpc

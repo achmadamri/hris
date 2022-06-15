@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.companyinfo.LocationsInterface
+path: 8CC563B232B7AB96901B80B1AFAD0DE7.gwt.rpc

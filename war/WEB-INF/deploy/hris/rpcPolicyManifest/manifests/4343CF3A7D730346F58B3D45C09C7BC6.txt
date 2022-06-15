@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.tax.EmployeePTTInterface
+path: DF11E939DF60531BC70B2712C31DDCF8.gwt.rpc

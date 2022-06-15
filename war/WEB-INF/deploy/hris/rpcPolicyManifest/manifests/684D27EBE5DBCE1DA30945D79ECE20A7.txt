@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.qualification.EducationInterface
+path: F43CD2A6A1DACC8EC4AF5346896A71EB.gwt.rpc

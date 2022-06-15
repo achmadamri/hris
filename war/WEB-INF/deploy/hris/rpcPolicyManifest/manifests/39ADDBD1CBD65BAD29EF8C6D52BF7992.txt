@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.time.attendance.AttendanceInterface
+path: C8357AF1591A8B145EB272480A64B91E.gwt.rpc

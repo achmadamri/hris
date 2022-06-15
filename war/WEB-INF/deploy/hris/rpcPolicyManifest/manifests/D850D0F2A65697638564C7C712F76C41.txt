@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.qualification.LicensesInterface
+path: CAFCEC42085B05CB7EB47291A92D52E7.gwt.rpc

@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.AssignedLanguagesInterface
+path: 5F832DE4623D1552914EC845F5EF9A47.gwt.rpc

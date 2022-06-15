@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.performance.KPIGroupInterface
+path: ED20D0DCB86B9532C4A14EF2DF0DE2DB.gwt.rpc

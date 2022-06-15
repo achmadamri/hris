@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.JobInterface
+path: BC5EDE622413816C93BA8F2DC7FDC0DF.gwt.rpc

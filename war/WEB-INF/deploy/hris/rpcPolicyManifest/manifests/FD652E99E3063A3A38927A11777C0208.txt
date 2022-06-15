@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.leave.AssignedLeavesInterface
+path: CBC3EF6989D4645438815430401AC5AE.gwt.rpc

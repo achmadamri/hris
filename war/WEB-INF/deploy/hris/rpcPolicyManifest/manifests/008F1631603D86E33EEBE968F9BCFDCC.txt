@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.reports.EmployeeTimesheetInterface
+path: 23143D8245E9C264C44921F7D030A2A0.gwt.rpc

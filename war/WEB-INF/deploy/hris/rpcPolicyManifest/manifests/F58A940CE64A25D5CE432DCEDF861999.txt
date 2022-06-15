@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.skills.SkillsInterface
+path: 76F310F587338C1D489BBE9CB3354C0C.gwt.rpc

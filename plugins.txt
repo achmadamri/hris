@@ -1,0 +1,11 @@
+IE
+http://dl.google.com/dl/gwt/plugins/ie/1.0.7263.20091208111100/gwt-dev-plugin.msi
+
+Firefox 24.3.0
+https://dl.google.com/dl/gwt/plugins/firefox/gwt-dev-plugin.xpi
+
+Safari
+https://dl.google.com/dl/gwt/plugins/safari/gwt-dev-plugin.dmg
+
+Chrome
+https://dl.google.com/dl/gwt/plugins/chrome/gwt-dev-plugin.crx

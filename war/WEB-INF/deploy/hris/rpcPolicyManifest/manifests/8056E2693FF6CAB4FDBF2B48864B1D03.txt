@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.job.PaygradeInterface
+path: 0959C281319CC56B08666447C74B07CE.gwt.rpc

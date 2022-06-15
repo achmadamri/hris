@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.job.EeoJobCategoryInterface
+path: 88F1566CACE88632949A3D9810343A17.gwt.rpc

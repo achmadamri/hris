@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.loan.AssignedLoanInterface
+path: EDF69ADB216C955A5765197C9B75FE35.gwt.rpc

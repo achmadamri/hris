@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.time.timesheets.ApprovalTimesheetInterface
+path: 8D813DD19C915A416F098A5CADA43193.gwt.rpc

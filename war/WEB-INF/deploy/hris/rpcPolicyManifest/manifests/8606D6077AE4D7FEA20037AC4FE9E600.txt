@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.performance.KPIEmployeeInterface
+path: 8A49EE73B244A73B8B89A80DD3BCF9D5.gwt.rpc

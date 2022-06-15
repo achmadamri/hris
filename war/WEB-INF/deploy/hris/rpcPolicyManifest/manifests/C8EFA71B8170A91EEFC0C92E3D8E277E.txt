@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.projectinfo.BudgetResourcesGroupInterface
+path: 1DBF5F6F57E96FB35AA82B6B0FBECE00.gwt.rpc

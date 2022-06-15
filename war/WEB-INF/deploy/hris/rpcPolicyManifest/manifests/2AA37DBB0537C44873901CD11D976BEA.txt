@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.leave.HolidayInterface
+path: 316B7C7A2DE31F1244941C79A7862052.gwt.rpc

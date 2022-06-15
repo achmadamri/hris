@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.tax.TarifPajakInterface
+path: 33BA4F836881FB6F7A5888F234FAD39B.gwt.rpc

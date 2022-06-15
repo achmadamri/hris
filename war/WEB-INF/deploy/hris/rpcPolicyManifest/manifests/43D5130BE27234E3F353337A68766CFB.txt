@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.admin.projectinfo.ProjectActivitiesGroupInterface
+path: 6F0E94E9C23E18ECAAC665204186191A.gwt.rpc

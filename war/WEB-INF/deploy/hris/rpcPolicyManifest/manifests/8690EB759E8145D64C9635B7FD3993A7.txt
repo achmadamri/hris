@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.tax.PTKPInterface
+path: B3567B08C734D9D82CE6FDEAEDC80566.gwt.rpc

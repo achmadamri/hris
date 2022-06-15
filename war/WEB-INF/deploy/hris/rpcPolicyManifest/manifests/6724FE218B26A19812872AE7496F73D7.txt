@@ -1,0 +1,2 @@
+serviceClass: com.gwt.hris.client.service.pim.AssignedSkillsInterface
+path: FDABF0019ACEB90771890546B9046855.gwt.rpc
