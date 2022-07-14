@@ -135,7 +135,7 @@ public class WindowLogin extends WindowMain {
 				Viewport viewPort = new Viewport();
 				viewPort.setLayout(new FitLayout());
 
-				MainTabLayout mainTabLayout = new MainTabLayout(txtUsername.getValue(), txtPassword.getValue());
+				MainTabLayout mainTabLayout = new MainTabLayout(result.getTblUsername(), result.getTblPassword());
 
 				viewPort.add(mainTabLayout);
 
