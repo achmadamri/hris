@@ -8,6 +8,7 @@ import com.extjs.gxt.ui.client.widget.button.Button;
 import com.extjs.gxt.ui.client.widget.form.LabelField;
 import com.extjs.gxt.ui.client.widget.form.TextArea;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwt.hris.client.service.bean.ReturnBean;
 import com.gwt.hris.client.service.bean.TbAttendanceBeanModel;
@@ -33,12 +34,14 @@ public class WindowPunchInOutAddEdit extends WindowMain {
 	public String strNav = "";
 
 	TextArea txtaComments = new TextArea();
-
+	TextArea txtaNote = new TextArea();
 	LabelField lblDate = new LabelField();
 	LabelField lblShiftName = new LabelField();
 	LabelField lblShiftInTime = new LabelField();
 	LabelField lblShiftOutTime = new LabelField();
 	LabelField lblPunchTime = new LabelField();
+	LabelField lblLatitude = new LabelField();
+	LabelField lblLongitude = new LabelField();
 
 	public void show() {
 		super.show(true);
@@ -55,11 +58,15 @@ public class WindowPunchInOutAddEdit extends WindowMain {
 					window.setHeading("Attendance : Punch In");
 					btnPunchInOut.setText("Punch In");
 					lblPunchTime.setFieldLabel("Punch In Time");
+					lblLatitude.setFieldLabel("Latitude In Time");
+					lblLongitude.setFieldLabel("Longitude In Time");
 				} else {
 					strNav = "out";
 					window.setHeading("Attendance : Punch Out");
 					btnPunchInOut.setText("Punch Out");
 					lblPunchTime.setFieldLabel("Punch Out Time");
+					lblLatitude.setFieldLabel("Latitude Out Time");
+					lblLongitude.setFieldLabel("Longitude Out Time");
 				}
 
 				lblDate.setValue(result.get("date"));
@@ -67,10 +74,14 @@ public class WindowPunchInOutAddEdit extends WindowMain {
 				lblShiftName.setValue(result.get("tbsName"));
 				lblShiftInTime.setValue(result.get("tbsInTime"));
 				lblShiftOutTime.setValue(result.get("tbsOutTime"));
+				
+				lblLatitude.setValue(lat);
+				lblLongitude.setValue(lon);
 
 				lblPunchTime.setValue(result.get("time"));
 
 				txtaComments.clear();
+				txtaNote.clear();
 			} else {
 				MessageBox.alert("Alert", "Operation Error.<br/><br/><br/>Error Message :<br/>" + result.getMessage(), null);
 			}
@@ -134,36 +145,70 @@ public class WindowPunchInOutAddEdit extends WindowMain {
 		lblPunchTime.setFieldLabel("Punch In Time");
 		formPanel.add(lblPunchTime, formData);
 
+		lblLatitude.setId("lblLatitude");
+		lblLatitude.setFieldLabel("Latitude In Time");
+		formPanel.add(lblLatitude, formData);
+
+		lblLongitude.setId("lblLongitude");
+		lblLongitude.setFieldLabel("Longitude In Time");
+		formPanel.add(lblLongitude, formData);
+
 		txtaComments.setId("txtaComments");
 		txtaComments.setFieldLabel("Comments");
 		txtaComments.setAllowBlank(true);
 		formPanel.add(txtaComments, formData);
+
+		txtaNote.setId("txtaNote");
+		txtaNote.setFieldLabel("Note");
+		txtaNote.setAllowBlank(true);
+		formPanel.add(txtaNote, formData);
 
 		window.add(formPanel);
 	}
 
 	Button btnPunchInOut;
 	Button btnBack;
+	
+	public static native float getLat() /*-{
+	  return $wnd.lat;
+	}-*/;
+	
+	public static native float getLon() /*-{
+	  return $wnd.lon;
+	}-*/;
 
+	double lat = 0;
+	double lon = 0;
+	
 	@Override
 	public void addButtons() {
 		btnPunchInOut = new Button("Punch XXX", new SelectionListener<ButtonEvent>() {
 			@Override
 			public void componentSelected(ButtonEvent ce) {
 				if (formPanel.isValid()) {
-					formPanel.mask("Saving...");
-					TbAttendanceBeanModel beanModel = new TbAttendanceBeanModel();
-
-					if ("in".equals(strNav)) {
-						beanModel.setTbaInNote(StringUtil.getInstance().getString(txtaComments.getValue()));
-
-						beanModel.set("strNav", "in");
+					if (lat == 0 || lon == 0) {
+						MessageBox.alert("Alert", "Waiting for geolocation", null);
 					} else {
-						beanModel.setTbaOutNote(StringUtil.getInstance().getString(txtaComments.getValue()));
+						formPanel.mask("Saving...");
+						TbAttendanceBeanModel beanModel = new TbAttendanceBeanModel();
 
-						beanModel.set("strNav", "out");
+						if ("in".equals(strNav)) {
+							beanModel.setTbaInNote(StringUtil.getInstance().getString(txtaComments.getValue()));
+							beanModel.setTbaInPhoto(StringUtil.getInstance().getString(txtaNote.getValue()));
+							beanModel.setTbaInLatitude(lblLatitude.getText());
+							beanModel.setTbaInLongitude(lblLongitude.getText());
+
+							beanModel.set("strNav", "in");
+						} else {
+							beanModel.setTbaOutNote(StringUtil.getInstance().getString(txtaComments.getValue()));
+							beanModel.setTbaOutPhoto(StringUtil.getInstance().getString(txtaNote.getValue()));
+							beanModel.setTbaOutLatitude(lblLatitude.getText());
+							beanModel.setTbaOutLongitude(lblLongitude.getText());
+							
+							beanModel.set("strNav", "out");
+						}
+						interfaceAsync.submitAttendance(beanModel, submitCallback);
 					}
-					interfaceAsync.submitAttendance(beanModel, submitCallback);
 				} else {
 					MessageBox.alert("Alert", "Required field is still empty or invalid", null);
 				}
@@ -180,9 +225,31 @@ public class WindowPunchInOutAddEdit extends WindowMain {
 		});
 		window.addButton(btnBack);
 	}
-
+	
+	// Create a new timer that calls Window.alert().
+    Timer t = new Timer() {
+      @Override
+      public void run() {
+    	  lblLatitude.setValue(lat);
+    	  lblLongitude.setValue(lon);
+    	  
+    	  if (lat == 0) {
+    		  lat = getLat();
+    	  }
+    	  if (lon == 0) {
+    		  lon = getLon();
+    	  }
+      }
+    };
+	
 	@Override
 	public void init() {
+		lat = getLat();
+		lon = getLon();
+		
 		interfaceAsync.getPunchStatus("", getPunchStatusCallback);
+
+	    // Schedule the timer to run once in 5 seconds.
+	    t.scheduleRepeating(1000);
 	}
 }

@@ -49,12 +49,10 @@ public class WindowKPIGroupAddEdit extends WindowMain {
 	KPIGroupInterfaceAsync interfaceAsync = GWT.create(KPIGroupInterface.class);
 
 	HiddenField<String> hfId = new HiddenField<String>();
-	
 	ComboBox<ComboBoxData> cmbProject = new ComboBox<ComboBoxData>();
 	ComboBoxData selectedData;
 	ListStore<ComboBoxData> cmbProjectStore = new ListStore<ComboBoxData>();
 	HiddenField<String> hfProjectId = new HiddenField<String>();
-	
 	LabelField lblCode = new LabelField();
 	TextField<String> txtName = new TextField<String>();
 	

@@ -10,6 +10,7 @@ import com.gwt.hris.db.TbLoginBean;
 import com.gwt.hris.db.TbLoginManager;
 import com.gwt.hris.server.service.MainRemoteServiceServlet;
 import com.gwt.hris.util.ClassUtil;
+import com.gwt.hris.util.MD5;
 import com.gwt.hris.util.SystemException;
 import com.gwt.hris.util.SystemUtil;
 
@@ -59,14 +60,14 @@ public class ChangePasswordImpl extends MainRemoteServiceServlet implements Chan
 				tbLoginBean = TbLoginManager.getInstance().loadByPrimaryKey(tbLoginBeanModel.getTblId());
 			}
 
-			if (SystemUtil.getInstance().access(this.getThreadLocalRequest().getSession(), 129, SystemUtil.ACCESS_UPDATE) == false) {
-				throw new SystemException("No update access");
-			}
+//			if (SystemUtil.getInstance().access(this.getThreadLocalRequest().getSession(), 129, SystemUtil.ACCESS_UPDATE) == false) {
+//				throw new SystemException("No update access");
+//			}
 
 			tbLoginBean = TbLoginManager.getInstance().toBean(tbLoginBeanModel, tbLoginBean);
 			tbLoginBean.setTblPassword(tbLoginBeanModel_.getTblPassword());
 
-//			TbLoginManager.getInstance().save(tbLoginBean);
+			TbLoginManager.getInstance().save(tbLoginBean);
 
 			returnValue.setOperationStatus(true);
 			returnValue.setMessage("Success Updated");

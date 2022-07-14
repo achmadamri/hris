@@ -40,5 +40,27 @@ body {
 			<span id="loading-msg">Loading...</span>
 		</div>
 	</div>
+
+	<script>
+		var lat = 0;
+		var lon = 0;
+		
+		function getLat() {			
+			navigator.geolocation.getCurrentPosition(setLat);
+		}
+
+		function setLat(position) {
+			lat = position.coords.latitude;
+		}
+		
+		function getLon() {			
+			navigator.geolocation.getCurrentPosition(setLon);
+		}
+
+		function setLon(position) {
+			lon = position.coords.longitude;
+		}
+	</script>
+
 </body>
 </html>

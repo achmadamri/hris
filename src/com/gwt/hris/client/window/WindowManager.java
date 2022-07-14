@@ -72,6 +72,7 @@ import com.gwt.hris.client.window.tax.WindowPTT;
 import com.gwt.hris.client.window.tax.WindowTaxRate;
 import com.gwt.hris.client.window.time.attendance.WindowAttendance;
 import com.gwt.hris.client.window.time.attendance.WindowPunchInOutAddEdit;
+import com.gwt.hris.client.window.time.attendance.WindowPunchInOutAddEditMinimal;
 import com.gwt.hris.client.window.time.timesheets.WindowApprovalTimesheet;
 import com.gwt.hris.client.window.time.timesheets.WindowProjectTimesheet;
 import com.gwt.hris.client.window.time.timesheets.WindowTimesheet;
@@ -205,6 +206,9 @@ public class WindowManager {
 			window.show(false);
 		} else if (strName.equals("Attendance")) {
 			WindowAttendance window = WindowAttendance.getInstance();
+			window.show(false);
+		} else if (strName.equals("Attendance Minimal")) {
+			WindowPunchInOutAddEditMinimal window = WindowPunchInOutAddEditMinimal.getInstance();
 			window.show(false);
 		} else if (strName.equals("Punch In/Out")) {
 			WindowPunchInOutAddEdit window = WindowPunchInOutAddEdit.getInstance();

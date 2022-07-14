@@ -65,11 +65,22 @@ public class WindowAttendance extends WindowMain {
 		window.setHeading("Attendance : Attendance");
 	}
 	
+	public static native void getLat() /*-{
+	  $wnd.getLat();
+	}-*/;
+	
+	public static native void getLon() /*-{
+	  $wnd.getLon();
+	}-*/;
+	
 	public void init() {
+		getLat();
+		getLon();
 		interfaceAsync.getPunchStatus("", getPunchStatusCallback);
 	}
 
 	AttendanceInterfaceAsync interfaceAsync = GWT.create(AttendanceInterface.class);
+	
 	SimpleComboBox<String> cmbMonth;
 	Button btnGo;
 	RpcProxy<PagingLoadResult<ViewAttendanceBeanModel>> proxy;
@@ -233,11 +244,11 @@ public class WindowAttendance extends WindowMain {
 		});
 		columns.add(columnConfig);
 
-		columnConfig = new ColumnConfig("tbaLongitude", "<center><b>Longitude</b></center>", 70);
+		columnConfig = new ColumnConfig("tbaInLongitude", "<center><b>In Longitude</b></center>", 70);
 		columnConfig.setRenderer(new GridCellRenderer<ModelData>() {
 			@Override
 			public Object render(ModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<ModelData> store, Grid<ModelData> grid) {
-				String data = model.get("tbaLongitude");
+				String data = model.get("tbaInLongitude");
 				if (data != null) {
 					return data;
 				} else {
@@ -247,11 +258,39 @@ public class WindowAttendance extends WindowMain {
 		});
 		columns.add(columnConfig);
 
-		columnConfig = new ColumnConfig("tbaLatitude", "<center><b>Latitude</b></center>", 70);
+		columnConfig = new ColumnConfig("tbaInLatitude", "<center><b>In Latitude</b></center>", 70);
 		columnConfig.setRenderer(new GridCellRenderer<ModelData>() {
 			@Override
 			public Object render(ModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<ModelData> store, Grid<ModelData> grid) {
-				String data = model.get("tbaLatitude");
+				String data = model.get("tbaInLatitude");
+				if (data != null) {
+					return data;
+				} else {
+					return "-";
+				}
+			}
+		});
+		columns.add(columnConfig);
+
+		columnConfig = new ColumnConfig("tbaOutLongitude", "<center><b>Out Longitude</b></center>", 70);
+		columnConfig.setRenderer(new GridCellRenderer<ModelData>() {
+			@Override
+			public Object render(ModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<ModelData> store, Grid<ModelData> grid) {
+				String data = model.get("tbaOutLongitude");
+				if (data != null) {
+					return data;
+				} else {
+					return "-";
+				}
+			}
+		});
+		columns.add(columnConfig);
+
+		columnConfig = new ColumnConfig("tbaOutLatitude", "<center><b>Latitude</b></center>", 70);
+		columnConfig.setRenderer(new GridCellRenderer<ModelData>() {
+			@Override
+			public Object render(ModelData model, String property, ColumnData config, int rowIndex, int colIndex, ListStore<ModelData> store, Grid<ModelData> grid) {
+				String data = model.get("tbaOutLatitude");
 				if (data != null) {
 					return data;
 				} else {

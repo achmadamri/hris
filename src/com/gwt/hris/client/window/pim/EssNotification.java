@@ -199,7 +199,7 @@ public class EssNotification extends EssMainCP {
 						@Override
 						public void componentSelected(ButtonEvent ce) {
 							String strData = model.get("tbnuName") == null ? "" : model.get("tbnuName").toString();
-							MainTabLayout.manager.showWindow(strData);
+							MainTabLayout.windowManager.showWindow(strData);
 							
 							notificationInterfaceAsync.submitNotificationRead((ViewNotificationBeanModel) model, callback);
 						}

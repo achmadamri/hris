@@ -49,6 +49,7 @@ import com.gwt.hris.client.service.pim.EmployeeListInterface;
 import com.gwt.hris.client.service.pim.EmployeeListInterfaceAsync;
 import com.gwt.hris.client.window.pim.WindowEss;
 import com.gwt.hris.client.window.system.WindowChangePassword;
+import com.gwt.hris.client.window.time.attendance.WindowPunchInOutAddEditMinimal;
 
 public class MainTabLayout extends LayoutContainer {
 	
@@ -58,13 +59,13 @@ public class MainTabLayout extends LayoutContainer {
 	String strPassword = "";
 	static Map<String, String> tabRegister = new HashMap<String, String>();
 	
-	ContentPanel west = new ContentPanel();
-	ContentPanel center = new ContentPanel();
-	ContentPanel south = new ContentPanel();
+	ContentPanel westContentPanel = new ContentPanel();
+	ContentPanel centerContentPanel = new ContentPanel();
+	ContentPanel southContentPanel = new ContentPanel();
 	public static TabPanel tabPanel = new TabPanel();
-	public static TreePanel<ModelData> tree = null;
+	public static TreePanel<ModelData> treePanel = null;
 	
-	public static WindowManager manager = new WindowManager();
+	public static WindowManager windowManager = new WindowManager();
 	
 	public MainTabLayout(String strUserName, String strPassword) {
 		this.strUserName = strUserName;
@@ -74,24 +75,24 @@ public class MainTabLayout extends LayoutContainer {
 	}
 	
 	public static WindowManager getInstance() {
-		return manager;
+		return windowManager;
 	}
 
 	protected void onRender(Element target, int index) {
 		super.onRender(target, index);
 
-		west.setLayout(new FitLayout());
-		west.setHeading("Menu");
+		westContentPanel.setLayout(new FitLayout());
+		westContentPanel.setHeading("Menu");
 
 		BorderLayout layout = new BorderLayout();
 		this.setLayout(layout);
 		this.setStyleAttribute("padding", "10px");
 		this.setStyleAttribute("padding-bottom", "30px");
 
-		center.setBodyBorder(false);
-		center.setHeaderVisible(false);
-		center.setScrollMode(Scroll.AUTOX);
-		center.setLayout(new FitLayout());
+		centerContentPanel.setBodyBorder(false);
+		centerContentPanel.setHeaderVisible(false);
+		centerContentPanel.setScrollMode(Scroll.AUTOX);
+		centerContentPanel.setLayout(new FitLayout());
 
 		BorderLayoutData westData = new BorderLayoutData(LayoutRegion.WEST, 200);
 		westData.setSplit(true);
@@ -106,15 +107,15 @@ public class MainTabLayout extends LayoutContainer {
 //		southData.setCollapsible(false);
 //		southData.setMargins(new Margins(0, 5, 0, 0));
 
-		this.add(west, westData);
-		this.add(center, centerData);
+		this.add(westContentPanel, westData);
+		this.add(centerContentPanel, centerData);
 //		this.add(south, southData);
 
 		tabPanel = new TabPanel();
 		tabPanel.setAnimScroll(true);  
 		tabPanel.setTabScroll(true);
 
-		center.add(tabPanel);
+		centerContentPanel.add(tabPanel);
 
 		TabItem tabItem = new TabItem();
 		tabItem.setText("");
@@ -151,22 +152,22 @@ public class MainTabLayout extends LayoutContainer {
 			TreeStore<ModelData> store = new TreeStore<ModelData>();
 			store.add(model.getChildren(), true);
 
-			tree = new TreePanel<ModelData>(store);
-			tree.setDisplayProperty("name");
-			tree.getStyle().setLeafIcon(Resources.ICONS.form());
-			tree.addListener(Events.OnClick, new Listener<TreePanelEvent<ModelData>>() {
+			treePanel = new TreePanel<ModelData>(store);
+			treePanel.setDisplayProperty("name");
+			treePanel.getStyle().setLeafIcon(Resources.ICONS.form());
+			treePanel.addListener(Events.OnClick, new Listener<TreePanelEvent<ModelData>>() {
 				public void handleEvent(TreePanelEvent<ModelData> be) {
 					ModelData m = be.getItem();
-					manager.showWindow((String) m.get("name"));
+					windowManager.showWindow((String) m.get("name"));
 				};
 			});
 			
-			ContentPanel panel = new ContentPanel();
-			panel = new ContentPanel();
-			panel.setBodyBorder(false);
-			panel.setHeaderVisible(false);
-			panel.setLayout(new RowLayout(Orientation.VERTICAL));
-			panel.setScrollMode(Scroll.AUTO);
+			ContentPanel contentPanel = new ContentPanel();
+			contentPanel = new ContentPanel();
+			contentPanel.setBodyBorder(false);
+			contentPanel.setHeaderVisible(false);
+			contentPanel.setLayout(new RowLayout(Orientation.VERTICAL));
+			contentPanel.setScrollMode(Scroll.AUTO);
 			
 			FormData formData = new FormData("100%");
 			
@@ -210,15 +211,17 @@ public class MainTabLayout extends LayoutContainer {
 			btnLogout.setToolTip("Logout");
 			formPanel.addButton(btnLogout);
 
-			panel.add(formPanel);
-			panel.add(tree);
+			contentPanel.add(formPanel);
+			contentPanel.add(treePanel);
 			
-			west.add(panel);
+			westContentPanel.add(contentPanel);
 			
 //			south.add(new LabelField("Copyright @ 2018 PT. Dafba Informatika Indonesia"));
 			
 			employeeListInterfaceAsync.getEmployee(0, getCallback);
-
+			
+			windowManager.showWindow("Attendance Minimal");
+			
 			layout();
 		}
 		
@@ -245,7 +248,7 @@ public class MainTabLayout extends LayoutContainer {
 						@Override
 						public void onSuccess(String result) {
 							if (!"".equals(result)) {
-								manager.showWindow(result);								
+								windowManager.showWindow(result);								
 							} else {
 								mainInterfaceAsync.getTbeId(new AsyncCallback<Integer>() {
 									@Override

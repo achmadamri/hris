@@ -34,6 +34,7 @@ import com.gwt.hris.db.ViewEmployeeInformationManager;
 import com.gwt.hris.server.service.MainRemoteServiceServlet;
 import com.gwt.hris.server.service.QueryManager;
 import com.gwt.hris.util.ClassUtil;
+import com.gwt.hris.util.MD5;
 import com.gwt.hris.util.StringUtil;
 import com.gwt.hris.util.SystemException;
 import com.gwt.hris.util.SystemUtil;
@@ -135,7 +136,7 @@ public class EmployeeListImpl extends MainRemoteServiceServlet implements Employ
 					// ESS Users
 					TbLoginBean tbLoginBean = TbLoginManager.getInstance().createTbLoginBean();
 					tbLoginBean.setTblUsername(bean.getTbeFirstName() + bean.getTbeLastName() + bean.getTbeId());
-					tbLoginBean.setTblPassword("123");
+					tbLoginBean.setTblPassword(MD5.getInstance().get("123"));
 					tbLoginBean.setTblStatus(1);
 					tbLoginBean.setTbeId(bean.getTbeId());
 					TbLoginManager.getInstance().save(tbLoginBean);
@@ -147,7 +148,7 @@ public class EmployeeListImpl extends MainRemoteServiceServlet implements Employ
 					cronAttendance.createAttendance(bean);
 
 					returnValue.setOperationStatus(true);
-					returnValue.setMessage("Success Saved. Your Employee can login as ESS user. Detault ESS user/password is " + tbLoginBean.getTblUsername().toLowerCase() + "/" + tbLoginBean.getTblPassword());
+					returnValue.setMessage("Success Saved. Your Employee can login as ESS user. Detault ESS user/password is " + tbLoginBean.getTblUsername().toLowerCase() + "/123");
 				} else {
 					if (SystemUtil.getInstance().access(httpSession, 90, SystemUtil.ACCESS_UPDATE) == false) {
 						throw new SystemException("No update access");

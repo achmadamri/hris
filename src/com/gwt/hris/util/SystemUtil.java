@@ -174,55 +174,57 @@ public class SystemUtil {
 		TbLoginBeanModel tbLoginBeanModel = (TbLoginBeanModel) httpSession.getAttribute("TbLoginBeanModel");
 
 		ViewEmployeeInformationBeanModel viewEmployeeInformationBeanModel = (ViewEmployeeInformationBeanModel) httpSession.getAttribute("ViewEmployeeInformationBeanModel");
+		
+		if (tbLoginBeanModel != null) {
+			if (tbLoginBeanModel.getTbaugId() == null) {
+				ViewMenuAccessBean viewMenuAccessBean = ViewMenuAccessManager.getInstance().loadByWhere("where tbm_id = " + intTbmId + " and tbjt_id = " + viewEmployeeInformationBeanModel.getTbjtId())[0];
+				ViewMenuAccessBeanModel viewMenuAccessBeanModel = ViewMenuAccessManager.getInstance().toBeanModel(viewMenuAccessBean);
 
-		if (tbLoginBeanModel.getTbaugId() == null) {
-			ViewMenuAccessBean viewMenuAccessBean = ViewMenuAccessManager.getInstance().loadByWhere("where tbm_id = " + intTbmId + " and tbjt_id = " + viewEmployeeInformationBeanModel.getTbjtId())[0];
-			ViewMenuAccessBeanModel viewMenuAccessBeanModel = ViewMenuAccessManager.getInstance().toBeanModel(viewMenuAccessBean);
+				if (strAccess.equals(SystemUtil.ACCESS_INSERT)) {
+					if (viewMenuAccessBeanModel.getTbmaInsert() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_UPDATE)) {
+					if (viewMenuAccessBeanModel.getTbmaUpdate() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_DELETE)) {
+					if (viewMenuAccessBeanModel.getTbmaDelete() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_VIEW)) {
+					if (viewMenuAccessBeanModel.getTbmaView() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_APPROVE)) {
+					if (viewMenuAccessBeanModel.getTbmaApprove() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
+						returnValue = true;
+					}
+				}
+			} else {
+				ViewMenuAccessAdminBean viewMenuAccessAdminBean = ViewMenuAccessAdminManager.getInstance().loadByWhere("where tbm_id = " + intTbmId + " and tbaug_id = " + tbLoginBeanModel.getTbaugId())[0];
+				ViewMenuAccessAdminBeanModel viewMenuAccessAdminBeanModel = ViewMenuAccessAdminManager.getInstance().toBeanModel(viewMenuAccessAdminBean);
 
-			if (strAccess.equals(SystemUtil.ACCESS_INSERT)) {
-				if (viewMenuAccessBeanModel.getTbmaInsert() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_UPDATE)) {
-				if (viewMenuAccessBeanModel.getTbmaUpdate() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_DELETE)) {
-				if (viewMenuAccessBeanModel.getTbmaDelete() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_VIEW)) {
-				if (viewMenuAccessBeanModel.getTbmaView() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_APPROVE)) {
-				if (viewMenuAccessBeanModel.getTbmaApprove() == 1 && viewMenuAccessBeanModel.getTbmaEnabled() == 1) {
-					returnValue = true;
-				}
-			}
-		} else {
-			ViewMenuAccessAdminBean viewMenuAccessAdminBean = ViewMenuAccessAdminManager.getInstance().loadByWhere("where tbm_id = " + intTbmId + " and tbaug_id = " + tbLoginBeanModel.getTbaugId())[0];
-			ViewMenuAccessAdminBeanModel viewMenuAccessAdminBeanModel = ViewMenuAccessAdminManager.getInstance().toBeanModel(viewMenuAccessAdminBean);
-
-			if (strAccess.equals(SystemUtil.ACCESS_INSERT)) {
-				if (viewMenuAccessAdminBeanModel.getTbmaaInsert() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_UPDATE)) {
-				if (viewMenuAccessAdminBeanModel.getTbmaaUpdate() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_DELETE)) {
-				if (viewMenuAccessAdminBeanModel.getTbmaaDelete() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_VIEW)) {
-				if (viewMenuAccessAdminBeanModel.getTbmaaView() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
-					returnValue = true;
-				}
-			} else if (strAccess.equals(SystemUtil.ACCESS_APPROVE)) {
-				if (viewMenuAccessAdminBeanModel.getTbmaaApprove() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
-					returnValue = true;
+				if (strAccess.equals(SystemUtil.ACCESS_INSERT)) {
+					if (viewMenuAccessAdminBeanModel.getTbmaaInsert() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_UPDATE)) {
+					if (viewMenuAccessAdminBeanModel.getTbmaaUpdate() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_DELETE)) {
+					if (viewMenuAccessAdminBeanModel.getTbmaaDelete() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_VIEW)) {
+					if (viewMenuAccessAdminBeanModel.getTbmaaView() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
+						returnValue = true;
+					}
+				} else if (strAccess.equals(SystemUtil.ACCESS_APPROVE)) {
+					if (viewMenuAccessAdminBeanModel.getTbmaaApprove() == 1 && viewMenuAccessAdminBeanModel.getTbmaaEnabled() == 1) {
+						returnValue = true;
+					}
 				}
 			}
 		}

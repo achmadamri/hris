@@ -136,61 +136,61 @@ public class CronAttendance implements Job {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
 		simpleDateFormat = new SimpleDateFormat("yyyy-MM");
 		
-		TbShiftBean tbShiftBeans[] = TbShiftManager.getInstance().loadByWhere("where tbs_name not in ('HOLIDAY', 'LEAVE', 'SICK')");
-		ViewAttendanceBean viewAttendanceBeans_Absent[] = ViewAttendanceCustomManager.getInstance().loadByWhereUnion(tbEmployeeBean.getTbeId(), simpleDateFormat.format(cal.getTime()));
-		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String strDateYYYYMM = simpleDateFormat.format(cal.getTime());
-		Date dateYYYYMM = simpleDateFormat.parse(strDateYYYYMM);
-		for (ViewAttendanceBean viewAttendanceBeans_Absent_ : viewAttendanceBeans_Absent) {
-			if (viewAttendanceBeans_Absent_.getTbaInTime() == null) {
-				simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				Date dateTba = simpleDateFormat.parse(viewAttendanceBeans_Absent_.getTbaDate());
-				
-				if (dateTba.before(dateYYYYMM) || dateTba.equals(dateYYYYMM)) {
-					for (TbShiftBean tbShiftBean : tbShiftBeans) {
-						if (viewAttendanceBeans_Absent_.getTbsId().intValue() == tbShiftBean.getTbsId().intValue()) {
-							simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-							Date dateOut = simpleDateFormat.parse(viewAttendanceBeans_Absent_.getTbsOutTime());
-							String strDateHHMMSS = simpleDateFormat.format(cal.getTime());
-							Date dateHHMMSS = simpleDateFormat.parse(strDateHHMMSS);
-							if (dateTba.before(dateYYYYMM) || dateOut.before(dateHHMMSS) || dateOut.equals(dateHHMMSS)) {
-								if (viewAttendanceBeans_Absent_.getTbaInTime() == null) {
-									String strDelete = "where tbe_id = " + tbEmployeeBean.getTbeId() + " and tba_date = '" + viewAttendanceBeans_Absent_.getTbaDate() + "'";
-									TbAttendanceManager.getInstance().deleteByWhere(strDelete);
-									
-									TbAttendanceBean tbAttendanceBean = TbAttendanceManager.getInstance().createTbAttendanceBean();
-									tbAttendanceBean.setTbeId(tbEmployeeBean.getTbeId());
-									tbAttendanceBean.setTbaDate(viewAttendanceBeans_Absent_.getTbaDate());
-									tbAttendanceBean.setTbaInTime(viewAttendanceBeans_Absent_.getTbsOutTime());
-
-									Date dateIn = simpleDateFormat.parse(viewAttendanceBeans_Absent_.getTbsInTime());
-									Calendar calIn = Calendar.getInstance();
-									calIn.setTime(dateIn);
-									Calendar calOut = Calendar.getInstance();
-									calOut.setTime(dateOut);
-									Long l = new Long(calOut.getTimeInMillis() - calIn.getTimeInMillis());
-									tbAttendanceBean.setTbaInTimeDiff(l.intValue());
-									
-									tbAttendanceBean.setTbaOutTime(viewAttendanceBeans_Absent_.getTbsOutTime());
-									tbAttendanceBean.setTbaOutTimeDiff(0);
-									
-									tbAttendanceBean.setTbaInNote("SYSTEM");
-									tbAttendanceBean.setTbaOutNote("SYSTEM");
-									TbAttendanceManager.getInstance().save(tbAttendanceBean);
-									
-									TbEmployeeShiftBean tbEmployeeShiftBean = TbEmployeeShiftManager.getInstance().createTbEmployeeShiftBean();
-									tbEmployeeShiftBean.setTbeId(tbEmployeeBean.getTbeId());
-									tbEmployeeShiftBean.setTbsId(viewAttendanceBeans_Absent_.getTbsId());
-									tbEmployeeShiftBean.setTbesDate(viewAttendanceBeans_Absent_.getTbaDate());
-
-									TbEmployeeShiftManager.getInstance().save(tbEmployeeShiftBean);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+//		TbShiftBean tbShiftBeans[] = TbShiftManager.getInstance().loadByWhere("where tbs_name not in ('HOLIDAY', 'LEAVE', 'SICK')");
+//		ViewAttendanceBean viewAttendanceBeans_Absent[] = ViewAttendanceCustomManager.getInstance().loadByWhereUnion(tbEmployeeBean.getTbeId(), simpleDateFormat.format(cal.getTime()));
+//		simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		String strDateYYYYMM = simpleDateFormat.format(cal.getTime());
+//		Date dateYYYYMM = simpleDateFormat.parse(strDateYYYYMM);
+//		for (ViewAttendanceBean viewAttendanceBeans_Absent_ : viewAttendanceBeans_Absent) {
+//			if (viewAttendanceBeans_Absent_.getTbaInTime() == null) {
+//				simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//				Date dateTba = simpleDateFormat.parse(viewAttendanceBeans_Absent_.getTbaDate());
+//				
+//				if (dateTba.before(dateYYYYMM) || dateTba.equals(dateYYYYMM)) {
+//					for (TbShiftBean tbShiftBean : tbShiftBeans) {
+//						if (viewAttendanceBeans_Absent_.getTbsId().intValue() == tbShiftBean.getTbsId().intValue()) {
+//							simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+//							Date dateOut = simpleDateFormat.parse(viewAttendanceBeans_Absent_.getTbsOutTime());
+//							String strDateHHMMSS = simpleDateFormat.format(cal.getTime());
+//							Date dateHHMMSS = simpleDateFormat.parse(strDateHHMMSS);
+//							if (dateTba.before(dateYYYYMM) || dateOut.before(dateHHMMSS) || dateOut.equals(dateHHMMSS)) {
+//								if (viewAttendanceBeans_Absent_.getTbaInTime() == null) {
+//									String strDelete = "where tbe_id = " + tbEmployeeBean.getTbeId() + " and tba_date = '" + viewAttendanceBeans_Absent_.getTbaDate() + "'";
+//									TbAttendanceManager.getInstance().deleteByWhere(strDelete);
+//									
+//									TbAttendanceBean tbAttendanceBean = TbAttendanceManager.getInstance().createTbAttendanceBean();
+//									tbAttendanceBean.setTbeId(tbEmployeeBean.getTbeId());
+//									tbAttendanceBean.setTbaDate(viewAttendanceBeans_Absent_.getTbaDate());
+//									tbAttendanceBean.setTbaInTime(viewAttendanceBeans_Absent_.getTbsOutTime());
+//
+//									Date dateIn = simpleDateFormat.parse(viewAttendanceBeans_Absent_.getTbsInTime());
+//									Calendar calIn = Calendar.getInstance();
+//									calIn.setTime(dateIn);
+//									Calendar calOut = Calendar.getInstance();
+//									calOut.setTime(dateOut);
+//									Long l = new Long(calOut.getTimeInMillis() - calIn.getTimeInMillis());
+//									tbAttendanceBean.setTbaInTimeDiff(l.intValue());
+//									
+//									tbAttendanceBean.setTbaOutTime(viewAttendanceBeans_Absent_.getTbsOutTime());
+//									tbAttendanceBean.setTbaOutTimeDiff(0);
+//									
+//									tbAttendanceBean.setTbaInNote("SYSTEM");
+//									tbAttendanceBean.setTbaOutNote("SYSTEM");
+//									TbAttendanceManager.getInstance().save(tbAttendanceBean);
+//									
+//									TbEmployeeShiftBean tbEmployeeShiftBean = TbEmployeeShiftManager.getInstance().createTbEmployeeShiftBean();
+//									tbEmployeeShiftBean.setTbeId(tbEmployeeBean.getTbeId());
+//									tbEmployeeShiftBean.setTbsId(viewAttendanceBeans_Absent_.getTbsId());
+//									tbEmployeeShiftBean.setTbesDate(viewAttendanceBeans_Absent_.getTbaDate());
+//
+//									TbEmployeeShiftManager.getInstance().save(tbEmployeeShiftBean);
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+//		}
 	}
 	
 	public void createReport(TbEmployeeBean tbEmployeeBean) throws DAOException, ParseException {
@@ -229,27 +229,28 @@ public class CronAttendance implements Job {
 			String strWhereHoliday = "where DATE_FORMAT(tbh_date, '%Y/%m/%d') = '" + df.format(calendar.getTime()) + "'";
 			int intHolidayCount = TbHolidayManager.getInstance().countWhere(strWhereHoliday);
 			
-			if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || intHolidayCount > 0) {
-				if (viewAttendanceBean.getTbsId() == 3) {
-					rptTbAttendanceBean.setTbsId(0);
-					
-					String strWhere = "where tbe_id = " + tbEmployeeBean.getTbeId() + " and tbes_date = '" + viewAttendanceBean.getTbaDate() + "'";
-					TbEmployeeShiftBean tbEmployeeShiftBeans[] = TbEmployeeShiftManager.getInstance().loadByWhere(strWhere);
-					if (tbEmployeeShiftBeans.length > 0) {
-						TbEmployeeShiftManager.getInstance().deleteByWhere(strWhere);
-					}
-					
-					TbEmployeeShiftBean tbEmployeeShiftBean = TbEmployeeShiftManager.getInstance().createTbEmployeeShiftBean();
-					tbEmployeeShiftBean.setTbeId(tbEmployeeBean.getTbeId());
-					tbEmployeeShiftBean.setTbsId(0);
-					tbEmployeeShiftBean.setTbesDate(viewAttendanceBean.getTbaDate());
-					TbEmployeeShiftManager.getInstance().save(tbEmployeeShiftBean);
-				} else {
-					rptTbAttendanceBean.setTbsId(viewAttendanceBean.getTbsId());				
-				}				
-			} else {
-				rptTbAttendanceBean.setTbsId(viewAttendanceBean.getTbsId());
-			}
+//			if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY || intHolidayCount > 0) {
+//				if (viewAttendanceBean.getTbsId() == 3) {
+//					rptTbAttendanceBean.setTbsId(0);
+//					
+//					String strWhere = "where tbe_id = " + tbEmployeeBean.getTbeId() + " and tbes_date = '" + viewAttendanceBean.getTbaDate() + "'";
+//					TbEmployeeShiftBean tbEmployeeShiftBeans[] = TbEmployeeShiftManager.getInstance().loadByWhere(strWhere);
+//					if (tbEmployeeShiftBeans.length > 0) {
+//						TbEmployeeShiftManager.getInstance().deleteByWhere(strWhere);
+//					}
+//					
+//					TbEmployeeShiftBean tbEmployeeShiftBean = TbEmployeeShiftManager.getInstance().createTbEmployeeShiftBean();
+//					tbEmployeeShiftBean.setTbeId(tbEmployeeBean.getTbeId());
+//					tbEmployeeShiftBean.setTbsId(0);
+//					tbEmployeeShiftBean.setTbesDate(viewAttendanceBean.getTbaDate());
+//					TbEmployeeShiftManager.getInstance().save(tbEmployeeShiftBean);
+//				} else {
+//					rptTbAttendanceBean.setTbsId(viewAttendanceBean.getTbsId());				
+//				}				
+//			} else {
+//				rptTbAttendanceBean.setTbsId(viewAttendanceBean.getTbsId());
+//			}
+			rptTbAttendanceBean.setTbsId(3);
 			
 			RptTbAttendanceManager.getInstance().save(rptTbAttendanceBean);
 		}

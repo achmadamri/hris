@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.extjs.gxt.ui.client.data.BasePagingLoadResult;
 import com.extjs.gxt.ui.client.data.PagingLoadConfig;
@@ -15,7 +16,9 @@ import com.extjs.gxt.ui.client.data.PagingLoadResult;
 import com.gwt.hris.client.service.bean.ReturnBean;
 import com.gwt.hris.client.service.bean.TbAttendanceBeanModel;
 import com.gwt.hris.client.service.bean.TbEmployeeBeanModel;
+import com.gwt.hris.client.service.bean.TbLoginBeanModel;
 import com.gwt.hris.client.service.bean.ViewAttendanceBeanModel;
+import com.gwt.hris.client.service.bean.ViewEmployeeInformationBeanModel;
 import com.gwt.hris.client.service.time.attendance.AttendanceInterface;
 import com.gwt.hris.cron.CronAttendance;
 import com.gwt.hris.db.Manager;
@@ -41,6 +44,52 @@ public class AttendanceInterfaceImpl extends MainRemoteServiceServlet implements
 	
 	private static final long serialVersionUID = 1147380468542423014L;
 	
+	public TbEmployeeBeanModel getEmployeeAttendance(int id, String month) {
+		return getEmployeeAttendance(id, null);
+	}
+
+	public TbEmployeeBeanModel getEmployeeAttendance(int id, String month, HttpServletRequest request) {
+		TbEmployeeBeanModel returnValue = new TbEmployeeBeanModel();
+
+		try {
+			if (SystemUtil.getInstance().access((this.getThreadLocalRequest() == null ? request : this.getThreadLocalRequest()).getSession(), 98, SystemUtil.ACCESS_VIEW) == false) {
+				throw new SystemException("No insert access");
+			}
+			
+			HttpServletRequest httpServletRequest = this.getThreadLocalRequest() == null ? request : this.getThreadLocalRequest();
+			HttpSession httpSession = httpServletRequest.getSession();
+			
+			TbEmployeeBean tbEmployeeBean = TbEmployeeManager.getInstance().loadByPrimaryKey(id);
+
+			if (tbEmployeeBean != null) {
+				returnValue = TbEmployeeManager.getInstance().toBeanModel(tbEmployeeBean);
+
+				ViewEmployeeInformationBeanModel viewEmployeeInformationBeanModel = (ViewEmployeeInformationBeanModel) httpSession.getAttribute("ViewEmployeeInformationBeanModel");
+				
+				ViewAttendanceBean viewAttendanceBeans[] = ViewAttendanceCustomManager.getInstance().loadByWhereUnion(tbEmployeeBean.getTbeId(), month);
+				ViewAttendanceBeanModel viewAttendanceBeanModels[] = ViewAttendanceCustomManager.getInstance().toBeanModels(viewAttendanceBeans);
+				
+				TbLoginBeanModel tbLoginBeanModel = (TbLoginBeanModel) httpSession.getAttribute("TbLoginBeanModel");
+				tbLoginBeanModel.set("viewEmployeeInformationBeanModel", viewEmployeeInformationBeanModel);
+				tbLoginBeanModel.set("viewAttendanceBeanModels", viewAttendanceBeanModels);
+				returnValue.set("tbLoginBeanModel", tbLoginBeanModel);
+				
+				returnValue.setOperationStatus(true);
+				returnValue.setMessage("");
+			} else {
+				returnValue.setOperationStatus(false);
+				returnValue.setMessage("Data Not Found");
+			}
+		} catch (Exception e) {
+			returnValue.setOperationStatus(false);
+			returnValue.setMessage(e.getMessage());
+			ClassUtil.getInstance().logError(log, e);
+			e.printStackTrace();
+		}
+
+		return returnValue;
+	}
+	
 	public ReturnBean submitAttendance(TbAttendanceBeanModel beanModel) {
 		return submitAttendance(beanModel, null);
 	}
@@ -57,17 +106,28 @@ public class AttendanceInterfaceImpl extends MainRemoteServiceServlet implements
 
 			Manager.getInstance().beginTransaction();
 
-			TbAttendanceBean bean = TbAttendanceManager.getInstance().createTbAttendanceBean();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(new Date());
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			TbAttendanceBean beans[] = TbAttendanceManager.getInstance().loadByWhere("where tbe_id = " + tbEmployeeBeanModel.getTbeId() + " and tba_date = '" + simpleDateFormat.format(cal.getTime()) + "' and tba_out_time is null");
+			TbAttendanceBean bean = null;
+			if (beans.length > 0) {
+				ViewAttendanceBean viewAttendanceBeansPrevious[] = ViewAttendanceManager.getInstance().loadByWhere("where tbe_id = " + tbEmployeeBeanModel.getTbeId() + " order by tba_date desc, tba_in_time desc, tba_out_time desc limit 10");
+				
+				if (viewAttendanceBeansPrevious[0].getTbaInTime() == null && viewAttendanceBeansPrevious[1].getTbaOutTime() == null) {
+					bean = TbAttendanceManager.getInstance().createTbAttendanceBean();
+				} else {
+					bean = beans[0];
+				}
+			} else {
+				bean = TbAttendanceManager.getInstance().createTbAttendanceBean();
+			}
+			
 			bean.setTbeId(tbEmployeeBeanModel.getTbeId());
-			bean = TbAttendanceManager.getInstance().toBean(beanModel, bean);
-
+			bean.setTbaDate(simpleDateFormat.format(cal.getTime()));
+			
 			if ("in".equals(beanModel.get("strNav"))) {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(new Date());
-
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				bean.setTbaDate(simpleDateFormat.format(cal.getTime()));
-
 				simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 				bean.setTbaInTime(simpleDateFormat.format(cal.getTime()));
 
@@ -75,51 +135,13 @@ public class AttendanceInterfaceImpl extends MainRemoteServiceServlet implements
 				bean.setTbaInLongitude(beanModel.getTbaInLongitude());
 				bean.setTbaInLatitude(beanModel.getTbaInLatitude());
 				bean.setTbaInPhoto(beanModel.getTbaInPhoto());
-
-				ViewEmployeeShiftBean employeeShiftBeans[] = ViewEmployeeShiftManager.getInstance().loadByWhere("where tbe_id = " + bean.getTbeId() + " and tbes_date = '" + bean.getTbaDate() + "'");
-
-				if (employeeShiftBeans.length > 0) {
-					ViewEmployeeShiftBean employeeShiftBean = employeeShiftBeans[0];
-
-					simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-					Calendar cal2 = Calendar.getInstance();
-					cal2.setTime(simpleDateFormat.parse(bean.getTbaDate() + " " + employeeShiftBean.getTbsInTime()));
-
-					int selisih = (int) (cal.getTimeInMillis() - cal2.getTimeInMillis());
-
-					bean.setTbaInTimeDiff(selisih);
-				} else {
-					TbShiftBean tbShiftBean = TbShiftManager.getInstance().loadByPrimaryKey(1);
-
-					simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-					Calendar cal2 = Calendar.getInstance();
-					cal2.setTime(simpleDateFormat.parse(bean.getTbaDate() + " " + tbShiftBean.getTbsInTime()));
-
-					int selisih = (int) (cal.getTimeInMillis() - cal2.getTimeInMillis());
-
-					bean.setTbaInTimeDiff(selisih);
-
-					TbEmployeeShiftBean tbEmployeeShiftBean = TbEmployeeShiftManager.getInstance().createTbEmployeeShiftBean();
-					tbEmployeeShiftBean.setTbeId(bean.getTbeId());
-					tbEmployeeShiftBean.setTbsId(3);
-					tbEmployeeShiftBean.setTbesDate(bean.getTbaDate());
-
-					TbEmployeeShiftManager.getInstance().save(tbEmployeeShiftBean);
-				}
+				
+				TbEmployeeShiftBean tbEmployeeShiftBean = TbEmployeeShiftManager.getInstance().createTbEmployeeShiftBean();
+				tbEmployeeShiftBean.setTbeId(bean.getTbeId());
+				tbEmployeeShiftBean.setTbsId(3);
+				tbEmployeeShiftBean.setTbesDate(bean.getTbaDate());
+				TbEmployeeShiftManager.getInstance().save(tbEmployeeShiftBean);
 			} else {
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(new Date());
-
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-				String strWhere = "where tbe_id = " + tbEmployeeBeanModel.getTbeId() + " and tba_date = '" + simpleDateFormat.format(cal.getTime()) + "'";
-
-				TbAttendanceBean beans[] = TbAttendanceManager.getInstance().loadByWhere(strWhere);
-
-				bean = beans[0];
-
 				simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 				bean.setTbaOutTime(simpleDateFormat.format(cal.getTime()));
 
@@ -127,30 +149,6 @@ public class AttendanceInterfaceImpl extends MainRemoteServiceServlet implements
 				bean.setTbaOutLongitude(beanModel.getTbaOutLongitude());
 				bean.setTbaOutLatitude(beanModel.getTbaOutLatitude());
 				bean.setTbaOutPhoto(beanModel.getTbaOutPhoto());
-
-				ViewEmployeeShiftBean employeeShiftBeans[] = ViewEmployeeShiftManager.getInstance().loadByWhere("where tbe_id = " + bean.getTbeId() + " and tbes_date = '" + bean.getTbaDate() + "'");
-
-				if (employeeShiftBeans.length > 0) {
-					ViewEmployeeShiftBean employeeShiftBean = employeeShiftBeans[0];
-
-					simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-					Calendar cal2 = Calendar.getInstance();
-					cal2.setTime(simpleDateFormat.parse(bean.getTbaDate() + " " + employeeShiftBean.getTbsOutTime()));
-
-					bean.setTbaOutTimeDiff((int) (cal.getTimeInMillis() - cal2.getTimeInMillis()));
-				} else {
-					TbShiftBean tbShiftBean = TbShiftManager.getInstance().loadByPrimaryKey(1);
-
-					simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-					Calendar cal2 = Calendar.getInstance();
-					cal2.setTime(simpleDateFormat.parse(bean.getTbaDate() + " " + tbShiftBean.getTbsOutTime()));
-
-					int selisih = (int) (cal.getTimeInMillis() - cal2.getTimeInMillis());
-
-					bean.setTbaOutTimeDiff(selisih);
-				}
 			}
 
 			TbAttendanceManager.getInstance().save(bean);
@@ -205,32 +203,77 @@ public class AttendanceInterfaceImpl extends MainRemoteServiceServlet implements
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(new Date());
-
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-			ViewAttendanceBean viewAttendanceBean;
+			System.out.println(cal.getTime());
 			
-			if ("".equals(strDate)) {
-				viewAttendanceBean = ViewAttendanceCustomManager.getInstance().loadByWhereUnion(tbEmployeeBeanModel.getTbeId(), simpleDateFormat.format(cal.getTime()))[0];				
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			
+			ViewAttendanceBean viewAttendanceBeans[] = ViewAttendanceManager.getInstance().loadByWhere("where tbe_id = " + tbEmployeeBeanModel.getTbeId() + " and tba_date = '" + simpleDateFormat.format(cal.getTime()) + "' order by tba_date desc, tba_in_time desc, tba_out_time desc");
+			ViewAttendanceBean viewAttendanceBeansPrevious[] = ViewAttendanceManager.getInstance().loadByWhere("where tbe_id = " + tbEmployeeBeanModel.getTbeId() + " order by tba_date desc, tba_in_time desc, tba_out_time desc limit 10");
+
+			if (viewAttendanceBeans.length == 0) {
+				if (viewAttendanceBeansPrevious.length == 0) {
+					returnValue.set("in", "true");
+				} else if (viewAttendanceBeansPrevious[0].getTbaOutTime() == null) {
+					returnValue.set("in", "false");
+				} else {
+					returnValue.set("in", "true");
+				}
 			} else {
-				viewAttendanceBean = ViewAttendanceCustomManager.getInstance().loadByWhereUnion(tbEmployeeBeanModel.getTbeId(), strDate)[0];
+				if (viewAttendanceBeans[0].getTbaOutTime() == null) {
+					returnValue.set("in", "false");					
+				} else {
+					returnValue.set("in", "true");
+				}
 			}
+			
 
-			if (viewAttendanceBean.getTbaInTime() == null) {
-				returnValue.set("in", "true");
-			} else {
-				returnValue.set("in", "false");
-			}
-
-			returnValue.set("tbsName", viewAttendanceBean.getTbsName());
-			returnValue.set("tbsInTime", viewAttendanceBean.getTbsInTime());
-			returnValue.set("tbsOutTime", viewAttendanceBean.getTbsOutTime());
-
-			returnValue.set("tbaInTime", viewAttendanceBean.getTbaInTime());
-			returnValue.set("tbaOutTime", viewAttendanceBean.getTbaOutTime());
-
-			returnValue.set("tbaInNote", viewAttendanceBean.getTbaInNote());
-			returnValue.set("tbaOutNote", viewAttendanceBean.getTbaOutNote());
+//			ViewAttendanceBean viewAttendanceBean = null;
+//			
+//			if ("".equals(strDate)) {
+//				ViewAttendanceBean viewAttendanceBeans[] = ViewAttendanceCustomManager.getInstance().loadByWhereUnion(tbEmployeeBeanModel.getTbeId(), simpleDateFormat.format(cal.getTime()));
+//				
+//				if (viewAttendanceBeans.length > 0) {
+//					viewAttendanceBean = viewAttendanceBeans[viewAttendanceBeans.length - 1];
+//				}
+//			} else {
+//				ViewAttendanceBean viewAttendanceBeans[] = ViewAttendanceCustomManager.getInstance().loadByWhereUnion(tbEmployeeBeanModel.getTbeId(), strDate);
+//				
+//				if (viewAttendanceBeans.length > 0) {
+//					viewAttendanceBean = viewAttendanceBeans[viewAttendanceBeans.length - 1];
+//				}
+//			}
+//			
+//			if (viewAttendanceBean == null) {
+//				returnValue.set("in", "true");
+//			} else {
+//				if (viewAttendanceBean.getTbaInTime() == null) {
+//					returnValue.set("in", "true");
+//				} else {
+//					if (viewAttendanceBean.getTbaOutTime() == null) {
+//						returnValue.set("in", "false");
+//					} else {
+//						SimpleDateFormat simpleDateFormatPunch = new SimpleDateFormat("HH:mm:ss");
+//						Date dateInTime = simpleDateFormatPunch.parse(viewAttendanceBean.getTbaInTime());
+//						Date dateOutTime = simpleDateFormatPunch.parse(viewAttendanceBean.getTbaOutTime());
+//						
+//						if (dateInTime.after(dateOutTime)) {
+//							returnValue.set("in", "false");
+//						} else {
+//							returnValue.set("in", "true");
+//						}
+//					}
+//				}
+//			}
+//
+//			returnValue.set("tbsName", viewAttendanceBean.getTbsName());
+//			returnValue.set("tbsInTime", viewAttendanceBean.getTbsInTime());
+//			returnValue.set("tbsOutTime", viewAttendanceBean.getTbsOutTime());
+//
+//			returnValue.set("tbaInTime", viewAttendanceBean.getTbaInTime());
+//			returnValue.set("tbaOutTime", viewAttendanceBean.getTbaOutTime());
+//
+//			returnValue.set("tbaInNote", viewAttendanceBean.getTbaInNote());
+//			returnValue.set("tbaOutNote", viewAttendanceBean.getTbaOutNote());
 
 			if ("".equals(strDate)) {
 				returnValue.set("date", simpleDateFormat.format(cal.getTime()));				
