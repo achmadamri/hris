@@ -1,0 +1,5 @@
+v 103
+a. perbaikan bug pada reports, penambahan parameter SUBREPORT_DIR
+
+v 104
+a. perbaikan bug pada saat entry employee baru dan update table tb_assigned_leaves, yang memberikan data inisialisasi assigned leaves
